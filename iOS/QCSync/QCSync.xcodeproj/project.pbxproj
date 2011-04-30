@@ -62,6 +62,7 @@
 		71E7087013340E70000973C7 /* SyncEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncEntry.m; sourceTree = "<group>"; };
 		71E7087313340E99000973C7 /* DeletedTrackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedTrackable.h; sourceTree = "<group>"; };
 		71E7087413340E99000973C7 /* DeletedTrackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedTrackable.m; sourceTree = "<group>"; };
+		9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Build Instructions!!!!.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		712B6DBC1332545B004C8275 = {
 			isa = PBXGroup;
 			children = (
+				9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */,
 				712B6DCC1332545B004C8275 /* QCSync */,
 				712B6DC91332545B004C8275 /* Frameworks */,
 				712B6DC81332545B004C8275 /* Products */,
