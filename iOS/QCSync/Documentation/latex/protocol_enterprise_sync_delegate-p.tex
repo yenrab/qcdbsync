@@ -1,0 +1,55 @@
+\hypertarget{protocol_enterprise_sync_delegate-p}{
+\section{$<$EnterpriseSyncDelegate$>$ Protocol Reference}
+\label{protocol_enterprise_sync_delegate-p}\index{EnterpriseSyncDelegate-\/p@{EnterpriseSyncDelegate-\/p}}
+}
+
+
+{\ttfamily \#import $<$EnterpriseSyncDelegate.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+(void) -\/ \hyperlink{protocol_enterprise_sync_delegate-p_ad58ceecd0a85bf8d7afca7054bdeac3e}{onSuccess}
+\item 
+(void) -\/ \hyperlink{protocol_enterprise_sync_delegate-p_acc7d647c0dd26008c54ff6c3332f4cdc}{onFailure:}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+EnterpriseSyncListener is a Delegate for the synchronization process. Add these delegate protocol methods to some object of your choice to receive notifications regarding the synchronization process. 
+
+\subsection{Member Function Documentation}
+\hypertarget{protocol_enterprise_sync_delegate-p_acc7d647c0dd26008c54ff6c3332f4cdc}{
+\index{EnterpriseSyncDelegate-\/p@{EnterpriseSyncDelegate-\/p}!onFailure:@{onFailure:}}
+\index{onFailure:@{onFailure:}!EnterpriseSyncDelegate-p@{EnterpriseSyncDelegate-\/p}}
+\subsubsection[{onFailure:}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) onFailure: 
+\begin{DoxyParamCaption}
+\item[{dummy(NSError $\ast$)}]{error}
+\end{DoxyParamCaption}
+}}
+\label{protocol_enterprise_sync_delegate-p_acc7d647c0dd26008c54ff6c3332f4cdc}
+Called when synchronization failes prior to completion 
+\begin{DoxyParams}{Parameters}
+{\em error} & An NSError describing the synchronization error \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\hypertarget{protocol_enterprise_sync_delegate-p_ad58ceecd0a85bf8d7afca7054bdeac3e}{
+\index{EnterpriseSyncDelegate-\/p@{EnterpriseSyncDelegate-\/p}!onSuccess@{onSuccess}}
+\index{onSuccess@{onSuccess}!EnterpriseSyncDelegate-p@{EnterpriseSyncDelegate-\/p}}
+\subsubsection[{onSuccess}]{\setlength{\rightskip}{0pt plus 5cm}-\/ (void) onSuccess 
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+}}
+\label{protocol_enterprise_sync_delegate-p_ad58ceecd0a85bf8d7afca7054bdeac3e}
+Called when synchronization completes successfully \begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+The documentation for this protocol was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+/Users/barneyl/Desktop/EnterpriseSyncDelegate.h\end{DoxyCompactItemize}

@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'QCSync' target in the 'QCSync' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
