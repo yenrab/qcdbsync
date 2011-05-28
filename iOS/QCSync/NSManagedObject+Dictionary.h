@@ -20,10 +20,9 @@
  
  */
 
-#import "SyncTracker.h"
-
-
-@implementation SyncTracker
-@dynamic lastSync;
-
+@interface NSManagedObject (toDictionary)
+-(NSDictionary *) toDictionary;
++(void) updateStoreWithDictionaries:(NSArray*)dictionaries inContext:(NSManagedObjectContext*)aContext;
++(BOOL) isUUID:(NSString*)aPotentialUUIDString;
 @end
+
