@@ -7,7 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		710D9379134AA13600286744 /* EnterpriseSyncDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9376134AA13400286744 /* EnterpriseSyncDelegate.h */; };
+		710D937A134AA13600286744 /* SynchronizedDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9377134AA13400286744 /* SynchronizedDB.h */; };
+		710D937B134AA13600286744 /* SynchronizedDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9378134AA13500286744 /* SynchronizedDB.m */; };
+		710D9391134AA17400286744 /* DeletedTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D937C134AA17400286744 /* DeletedTrackable.h */; };
+		710D9392134AA17400286744 /* DeletedTrackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D937D134AA17400286744 /* DeletedTrackable.m */; };
+		710D9393134AA17400286744 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D937E134AA17400286744 /* JSON.h */; };
+		710D9394134AA17400286744 /* NSManagedObject+Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D937F134AA17400286744 /* NSManagedObject+Dictionary.h */; };
+		710D9395134AA17400286744 /* NSManagedObject+Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9380134AA17400286744 /* NSManagedObject+Dictionary.m */; };
+		710D9396134AA17400286744 /* NSObject+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9381134AA17400286744 /* NSObject+SBJSON.h */; };
+		710D9397134AA17400286744 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9382134AA17400286744 /* NSObject+SBJSON.m */; };
+		710D9398134AA17400286744 /* NSString+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9383134AA17400286744 /* NSString+SBJSON.h */; };
+		710D9399134AA17400286744 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9384134AA17400286744 /* NSString+SBJSON.m */; };
+		710D939A134AA17400286744 /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9385134AA17400286744 /* SBJsonBase.h */; };
+		710D939B134AA17400286744 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9386134AA17400286744 /* SBJsonBase.m */; };
+		710D939C134AA17400286744 /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9387134AA17400286744 /* SBJsonParser.h */; };
+		710D939D134AA17400286744 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9388134AA17400286744 /* SBJsonParser.m */; };
+		710D939E134AA17400286744 /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D9389134AA17400286744 /* SBJsonWriter.h */; };
+		710D939F134AA17400286744 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D938A134AA17400286744 /* SBJsonWriter.m */; };
+		710D93A0134AA17400286744 /* SyncEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D938B134AA17400286744 /* SyncEntry.h */; };
+		710D93A1134AA17400286744 /* SyncEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D938C134AA17400286744 /* SyncEntry.m */; };
+		710D93A2134AA17400286744 /* SyncTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D938D134AA17400286744 /* SyncTracker.h */; };
+		710D93A3134AA17400286744 /* SyncTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D938E134AA17400286744 /* SyncTracker.m */; };
+		710D93A4134AA17400286744 /* Trackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 710D938F134AA17400286744 /* Trackable.h */; };
+		710D93A5134AA17400286744 /* Trackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 710D9390134AA17400286744 /* Trackable.m */; };
 		712B6DCB1332545B004C8275 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712B6DCA1332545B004C8275 /* Foundation.framework */; };
+<<<<<<< HEAD
 		712B6DD913325474004C8275 /* SynchronizedDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DD413325474004C8275 /* SynchronizedDB.h */; };
 		712B6DDA13325474004C8275 /* SynchronizedDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DD513325474004C8275 /* SynchronizedDB.m */; };
 		712B6DDB13325474004C8275 /* EnterpriseSyncDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */; };
@@ -30,12 +55,39 @@
 		71E7086E13340E70000973C7 /* SyncTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7086C13340E70000973C7 /* SyncTracker.m */; };
 		71E7087513340E99000973C7 /* DeletedTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E7087313340E99000973C7 /* DeletedTrackable.h */; };
 		71E7087613340E99000973C7 /* DeletedTrackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7087413340E99000973C7 /* DeletedTrackable.m */; };
+=======
+>>>>>>> 0a90742c5ee83413669bee2c0de85d5684ba6dde
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		710D9376134AA13400286744 /* EnterpriseSyncDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterpriseSyncDelegate.h; sourceTree = "<group>"; };
+		710D9377134AA13400286744 /* SynchronizedDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynchronizedDB.h; sourceTree = "<group>"; };
+		710D9378134AA13500286744 /* SynchronizedDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SynchronizedDB.m; sourceTree = "<group>"; };
+		710D937C134AA17400286744 /* DeletedTrackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedTrackable.h; sourceTree = "<group>"; };
+		710D937D134AA17400286744 /* DeletedTrackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedTrackable.m; sourceTree = "<group>"; };
+		710D937E134AA17400286744 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		710D937F134AA17400286744 /* NSManagedObject+Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Dictionary.h"; sourceTree = "<group>"; };
+		710D9380134AA17400286744 /* NSManagedObject+Dictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Dictionary.m"; sourceTree = "<group>"; };
+		710D9381134AA17400286744 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		710D9382134AA17400286744 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		710D9383134AA17400286744 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		710D9384134AA17400286744 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		710D9385134AA17400286744 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		710D9386134AA17400286744 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		710D9387134AA17400286744 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		710D9388134AA17400286744 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		710D9389134AA17400286744 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		710D938A134AA17400286744 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		710D938B134AA17400286744 /* SyncEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncEntry.h; sourceTree = "<group>"; };
+		710D938C134AA17400286744 /* SyncEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncEntry.m; sourceTree = "<group>"; };
+		710D938D134AA17400286744 /* SyncTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncTracker.h; sourceTree = "<group>"; };
+		710D938E134AA17400286744 /* SyncTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncTracker.m; sourceTree = "<group>"; };
+		710D938F134AA17400286744 /* Trackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trackable.h; sourceTree = "<group>"; };
+		710D9390134AA17400286744 /* Trackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trackable.m; sourceTree = "<group>"; };
 		712B6DC71332545B004C8275 /* libQCSync.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libQCSync.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		712B6DCA1332545B004C8275 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		712B6DCE1332545B004C8275 /* QCSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QCSync-Prefix.pch"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		712B6DD413325474004C8275 /* SynchronizedDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynchronizedDB.h; sourceTree = "<group>"; };
 		712B6DD513325474004C8275 /* SynchronizedDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SynchronizedDB.m; sourceTree = "<group>"; };
 		712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterpriseSyncDelegate.h; sourceTree = "<group>"; };
@@ -59,6 +111,8 @@
 		71E7087313340E99000973C7 /* DeletedTrackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedTrackable.h; sourceTree = "<group>"; };
 		71E7087413340E99000973C7 /* DeletedTrackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedTrackable.m; sourceTree = "<group>"; };
 		9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Build Instructions!!!!.txt"; sourceTree = "<group>"; };
+=======
+>>>>>>> 0a90742c5ee83413669bee2c0de85d5684ba6dde
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +130,6 @@
 		712B6DBC1332545B004C8275 = {
 			isa = PBXGroup;
 			children = (
-				9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */,
 				712B6DCC1332545B004C8275 /* QCSync */,
 				712B6DC91332545B004C8275 /* Frameworks */,
 				712B6DC81332545B004C8275 /* Products */,
@@ -102,9 +155,12 @@
 		712B6DCC1332545B004C8275 /* QCSync */ = {
 			isa = PBXGroup;
 			children = (
-				712B6DD413325474004C8275 /* SynchronizedDB.h */,
-				712B6DD513325474004C8275 /* SynchronizedDB.m */,
-				712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */,
+				710D9376134AA13400286744 /* EnterpriseSyncDelegate.h */,
+				710D9377134AA13400286744 /* SynchronizedDB.h */,
+				710D9378134AA13500286744 /* SynchronizedDB.m */,
+				710D937F134AA17400286744 /* NSManagedObject+Dictionary.h */,
+				710D9380134AA17400286744 /* NSManagedObject+Dictionary.m */,
+				710D938F134AA17400286744 /* Trackable.h */,
 				712B6DCD1332545B004C8275 /* Supporting Files */,
 			);
 			path = QCSync;
@@ -113,6 +169,7 @@
 		712B6DCD1332545B004C8275 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				71E7087313340E99000973C7 /* DeletedTrackable.h */,
 				71E7087413340E99000973C7 /* DeletedTrackable.m */,
 				71E7086B13340E70000973C7 /* SyncTracker.h */,
@@ -132,6 +189,26 @@
 				712B6DE813325493004C8275 /* SBJsonWriter.m */,
 				712B6DD713325474004C8275 /* NSManagedObject+Dictionary.h */,
 				712B6DD813325474004C8275 /* NSManagedObject+Dictionary.m */,
+=======
+				710D937C134AA17400286744 /* DeletedTrackable.h */,
+				710D937D134AA17400286744 /* DeletedTrackable.m */,
+				710D937E134AA17400286744 /* JSON.h */,
+				710D9381134AA17400286744 /* NSObject+SBJSON.h */,
+				710D9382134AA17400286744 /* NSObject+SBJSON.m */,
+				710D9383134AA17400286744 /* NSString+SBJSON.h */,
+				710D9384134AA17400286744 /* NSString+SBJSON.m */,
+				710D9385134AA17400286744 /* SBJsonBase.h */,
+				710D9386134AA17400286744 /* SBJsonBase.m */,
+				710D9387134AA17400286744 /* SBJsonParser.h */,
+				710D9388134AA17400286744 /* SBJsonParser.m */,
+				710D9389134AA17400286744 /* SBJsonWriter.h */,
+				710D938A134AA17400286744 /* SBJsonWriter.m */,
+				710D938B134AA17400286744 /* SyncEntry.h */,
+				710D938C134AA17400286744 /* SyncEntry.m */,
+				710D938D134AA17400286744 /* SyncTracker.h */,
+				710D938E134AA17400286744 /* SyncTracker.m */,
+				710D9390134AA17400286744 /* Trackable.m */,
+>>>>>>> 0a90742c5ee83413669bee2c0de85d5684ba6dde
 				712B6DCE1332545B004C8275 /* QCSync-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -144,6 +221,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				712B6DD913325474004C8275 /* SynchronizedDB.h in Headers */,
 				712B6DDB13325474004C8275 /* EnterpriseSyncDelegate.h in Headers */,
 				712B6DDC13325474004C8275 /* NSManagedObject+Dictionary.h in Headers */,
@@ -156,6 +234,21 @@
 				71E7086913340E6F000973C7 /* Trackable.h in Headers */,
 				71E7086D13340E70000973C7 /* SyncTracker.h in Headers */,
 				71E7087513340E99000973C7 /* DeletedTrackable.h in Headers */,
+=======
+				710D9379134AA13600286744 /* EnterpriseSyncDelegate.h in Headers */,
+				710D937A134AA13600286744 /* SynchronizedDB.h in Headers */,
+				710D9391134AA17400286744 /* DeletedTrackable.h in Headers */,
+				710D9393134AA17400286744 /* JSON.h in Headers */,
+				710D9394134AA17400286744 /* NSManagedObject+Dictionary.h in Headers */,
+				710D9396134AA17400286744 /* NSObject+SBJSON.h in Headers */,
+				710D9398134AA17400286744 /* NSString+SBJSON.h in Headers */,
+				710D939A134AA17400286744 /* SBJsonBase.h in Headers */,
+				710D939C134AA17400286744 /* SBJsonParser.h in Headers */,
+				710D939E134AA17400286744 /* SBJsonWriter.h in Headers */,
+				710D93A0134AA17400286744 /* SyncEntry.h in Headers */,
+				710D93A2134AA17400286744 /* SyncTracker.h in Headers */,
+				710D93A4134AA17400286744 /* Trackable.h in Headers */,
+>>>>>>> 0a90742c5ee83413669bee2c0de85d5684ba6dde
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +307,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# combine lib files for various platforms into one\nlipo -create \"$BUILD_DIR/Release-iphoneos/libQCSync.a\" \"$BUILD_DIR/Release-iphonesimulator/libQCSync.a\" -output qc_dbsync.a";
+			shellScript = "# remove existing product lib file, just in case\nrm -rf /Developer/qc_dbsync.a\n\n# combine lib files for various platforms into one\nlipo -create \"/Users/barneyl/Library/Developer/Xcode/DerivedData/iPhoneDevCon-drqjrclxbeeqrmfutnrtpsqytpot/Build/Products/Release-iphoneos/libQCSync.a\" \"/Users/barneyl/Library/Developer/Xcode/DerivedData/iPhoneDevCon-drqjrclxbeeqrmfutnrtpsqytpot/Build/Products/Release-iphonesimulator/libQCSync.a\" -output /Developer/qc_dbsync.a";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -223,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
 				712B6DDA13325474004C8275 /* SynchronizedDB.m in Sources */,
 				712B6DDD13325474004C8275 /* NSManagedObject+Dictionary.m in Sources */,
 				712B6DEB13325493004C8275 /* NSObject+SBJSON.m in Sources */,
@@ -233,6 +327,19 @@
 				71E7086A13340E6F000973C7 /* Trackable.m in Sources */,
 				71E7086E13340E70000973C7 /* SyncTracker.m in Sources */,
 				71E7087613340E99000973C7 /* DeletedTrackable.m in Sources */,
+=======
+				710D937B134AA13600286744 /* SynchronizedDB.m in Sources */,
+				710D9392134AA17400286744 /* DeletedTrackable.m in Sources */,
+				710D9395134AA17400286744 /* NSManagedObject+Dictionary.m in Sources */,
+				710D9397134AA17400286744 /* NSObject+SBJSON.m in Sources */,
+				710D9399134AA17400286744 /* NSString+SBJSON.m in Sources */,
+				710D939B134AA17400286744 /* SBJsonBase.m in Sources */,
+				710D939D134AA17400286744 /* SBJsonParser.m in Sources */,
+				710D939F134AA17400286744 /* SBJsonWriter.m in Sources */,
+				710D93A1134AA17400286744 /* SyncEntry.m in Sources */,
+				710D93A3134AA17400286744 /* SyncTracker.m in Sources */,
+				710D93A5134AA17400286744 /* Trackable.m in Sources */,
+>>>>>>> 0a90742c5ee83413669bee2c0de85d5684ba6dde
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
