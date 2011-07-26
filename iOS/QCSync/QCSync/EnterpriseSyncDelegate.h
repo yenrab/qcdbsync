@@ -26,6 +26,8 @@
  EnterpriseSyncListener is a Delegate for the synchronization process.  Add these delegate protocol methods to some object of your choice to receive notifications regarding the synchronization process.  
  */
 @protocol EnterpriseSyncDelegate
+
+@required
 /**
  Called when synchronization completes successfully
  @returns void
@@ -37,6 +39,17 @@
  @returns void
  */
 -(void) onFailure:(NSError*)error;
+
+/*
+ *  If you use Xcode to include CoreData these methods are implemented in your AppDelegate already.
+ *  If you don't use Xcode to do this you will need to implement the methods yourself.
+ */
+
+- (void)saveContext;
+
+- (NSPersistentStoreCoordinator*)persistentStoreCoordinator;
+
+- (NSManagedObjectContext*)managedObjectContext;
 
 
 @end

@@ -189,6 +189,7 @@ static NSMutableCharacterSet *kEscapeChars;
             [json appendString:[self indent]];
         
         if (![value isKindOfClass:[NSString class]]) {
+            NSLog(@"bad key: %@",value);
             [self addErrorWithCode:EUNSUPPORTED description: @"JSON object key must be string"];
             return NO;
         }

@@ -48,6 +48,7 @@
 
 #import <CoreData/CoreData.h>
 #import "EnterpriseSyncDelegate.h"
+
 @class SyncData;
 
 
@@ -61,10 +62,14 @@
 	NSURL *url;
 	NSCondition *theCondition;
 	NSPersistentStoreCoordinator* theCoordinator;
+    //NSManagedObjectContext *baseContext;
     /**
      The delegate notified on sync completion or failure
      */
 	id <EnterpriseSyncDelegate> delegate;
+    BOOL loggedIn;
+    NSString *uName;
+    NSString *pWord;
 }
 @property (nonatomic, retain) NSDictionary *changes;
 @property (nonatomic, retain) NSMutableData *resultData;
@@ -72,21 +77,31 @@
 @property (nonatomic, retain) id<EnterpriseSyncDelegate> delegate;
 @property (nonatomic, retain) NSCondition *theCondition;
 @property (nonatomic, retain) NSPersistentStoreCoordinator* theCoordinator;
+@property (readonly) BOOL loggedIn;
 
 /**
- Returns an initialized SynchronizedDB object that is ready to sync any changes made to the data store.
+ Returns an initialized SynchronizedDB object that is ready to sync any changes made to the data store.  
+ This method also attempts to login the service using the user name and password.
  @param aCoordinator The coordinator for the data store
+ @param aContext The context for the data store in which queries, insertions, and deletions are made
  @param aURLString the url to the web app or service that is the front end for the remote database
  @param aUserName the user name on the remote app or service that has rights to access the app or service
  @param aPassword the password for the user on the remote app or service that has rights to access the app or service
- @returns an initialized SynchronizedDB object that is waiting to sync with a remote app or service
+ @returns an initialized SynchronizedDB object that is waiting to sync with a remote app or service if login succeeds
  */
-- (SynchronizedDB*)init:(NSPersistentStoreCoordinator*)aCoordinator withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword;
+- (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword;
+/**
+ Attempt to login.  This is used if at any time the connection is lost to the remote service.
+ @param userName The user name for the remote service
+ @param password The password for the remote service
+ @returns YES on success or NO on failure.
+ */
+- (BOOL) attemptRemoteLogin:(NSString*)userName withPassword:(NSString*)password;
 /**
  Triggers synchronization of the local CoreData datastore with the remote web app or service.
- @returns void
+ @returns YES on success or NO on failure.
  */
-- (void)sync;
+- (BOOL)sync;
 /**
  A class method that returns unique UUID identifiers
  @returns NSString* to a UUID string

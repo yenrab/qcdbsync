@@ -17,7 +17,7 @@
  */
 
 @interface NSManagedObject (toDictionary)
--(NSDictionary *) toDictionary:(NSMutableSet*)traversedObjects;
+-(NSDictionary *) toDictionary:(NSMutableSet*)traversedObjects inContext:(NSManagedObjectContext*)aContext;
 +(NSArray*) fromDictionary:(NSArray*)dictionaries inContext:(NSManagedObjectContext*)aContext;
 +(BOOL) isUUID:(NSString*)aPotentialUUIDString;
 @end
