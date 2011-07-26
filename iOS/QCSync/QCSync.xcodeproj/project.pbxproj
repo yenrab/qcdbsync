@@ -1,0 +1,319 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		712B6DCB1332545B004C8275 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712B6DCA1332545B004C8275 /* Foundation.framework */; };
+		712B6DD913325474004C8275 /* SynchronizedDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DD413325474004C8275 /* SynchronizedDB.h */; };
+		712B6DDA13325474004C8275 /* SynchronizedDB.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DD513325474004C8275 /* SynchronizedDB.m */; };
+		712B6DDB13325474004C8275 /* EnterpriseSyncDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */; };
+		712B6DDC13325474004C8275 /* NSManagedObject+Dictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DD713325474004C8275 /* NSManagedObject+Dictionary.h */; };
+		712B6DDD13325474004C8275 /* NSManagedObject+Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DD813325474004C8275 /* NSManagedObject+Dictionary.m */; };
+		712B6DE913325493004C8275 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DDE13325493004C8275 /* JSON.h */; };
+		712B6DEA13325493004C8275 /* NSObject+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DDF13325493004C8275 /* NSObject+SBJSON.h */; };
+		712B6DEB13325493004C8275 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DE013325493004C8275 /* NSObject+SBJSON.m */; };
+		712B6DEC13325493004C8275 /* NSString+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DE113325493004C8275 /* NSString+SBJSON.h */; };
+		712B6DED13325493004C8275 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DE213325493004C8275 /* NSString+SBJSON.m */; };
+		712B6DEE13325493004C8275 /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DE313325493004C8275 /* SBJsonBase.h */; };
+		712B6DEF13325493004C8275 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DE413325493004C8275 /* SBJsonBase.m */; };
+		712B6DF013325493004C8275 /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DE513325493004C8275 /* SBJsonParser.h */; };
+		712B6DF113325493004C8275 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DE613325493004C8275 /* SBJsonParser.m */; };
+		712B6DF213325493004C8275 /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 712B6DE713325493004C8275 /* SBJsonWriter.h */; };
+		712B6DF313325493004C8275 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 712B6DE813325493004C8275 /* SBJsonWriter.m */; };
+		71E7086913340E6F000973C7 /* Trackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E7086713340E6F000973C7 /* Trackable.h */; };
+		71E7086A13340E6F000973C7 /* Trackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7086813340E6F000973C7 /* Trackable.m */; };
+		71E7086D13340E70000973C7 /* SyncTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E7086B13340E70000973C7 /* SyncTracker.h */; };
+		71E7086E13340E70000973C7 /* SyncTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7086C13340E70000973C7 /* SyncTracker.m */; };
+		71E7087513340E99000973C7 /* DeletedTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E7087313340E99000973C7 /* DeletedTrackable.h */; };
+		71E7087613340E99000973C7 /* DeletedTrackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7087413340E99000973C7 /* DeletedTrackable.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		712B6DC71332545B004C8275 /* libQCSync.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libQCSync.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		712B6DCA1332545B004C8275 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		712B6DCE1332545B004C8275 /* QCSync-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QCSync-Prefix.pch"; sourceTree = "<group>"; };
+		712B6DD413325474004C8275 /* SynchronizedDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynchronizedDB.h; sourceTree = "<group>"; };
+		712B6DD513325474004C8275 /* SynchronizedDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SynchronizedDB.m; sourceTree = "<group>"; };
+		712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnterpriseSyncDelegate.h; sourceTree = "<group>"; };
+		712B6DD713325474004C8275 /* NSManagedObject+Dictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Dictionary.h"; sourceTree = "<group>"; };
+		712B6DD813325474004C8275 /* NSManagedObject+Dictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Dictionary.m"; sourceTree = "<group>"; };
+		712B6DDE13325493004C8275 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		712B6DDF13325493004C8275 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		712B6DE013325493004C8275 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		712B6DE113325493004C8275 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		712B6DE213325493004C8275 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		712B6DE313325493004C8275 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		712B6DE413325493004C8275 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		712B6DE513325493004C8275 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		712B6DE613325493004C8275 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		712B6DE713325493004C8275 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		712B6DE813325493004C8275 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		71E7086713340E6F000973C7 /* Trackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trackable.h; sourceTree = "<group>"; };
+		71E7086813340E6F000973C7 /* Trackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trackable.m; sourceTree = "<group>"; };
+		71E7086B13340E70000973C7 /* SyncTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncTracker.h; sourceTree = "<group>"; };
+		71E7086C13340E70000973C7 /* SyncTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncTracker.m; sourceTree = "<group>"; };
+		71E7087313340E99000973C7 /* DeletedTrackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedTrackable.h; sourceTree = "<group>"; };
+		71E7087413340E99000973C7 /* DeletedTrackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedTrackable.m; sourceTree = "<group>"; };
+		9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Build Instructions!!!!.txt"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		712B6DC41332545B004C8275 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				712B6DCB1332545B004C8275 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		712B6DBC1332545B004C8275 = {
+			isa = PBXGroup;
+			children = (
+				9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */,
+				712B6DCC1332545B004C8275 /* QCSync */,
+				712B6DC91332545B004C8275 /* Frameworks */,
+				712B6DC81332545B004C8275 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		712B6DC81332545B004C8275 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				712B6DC71332545B004C8275 /* libQCSync.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		712B6DC91332545B004C8275 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				712B6DCA1332545B004C8275 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		712B6DCC1332545B004C8275 /* QCSync */ = {
+			isa = PBXGroup;
+			children = (
+				712B6DD413325474004C8275 /* SynchronizedDB.h */,
+				712B6DD513325474004C8275 /* SynchronizedDB.m */,
+				712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */,
+				712B6DCD1332545B004C8275 /* Supporting Files */,
+			);
+			path = QCSync;
+			sourceTree = "<group>";
+		};
+		712B6DCD1332545B004C8275 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				71E7087313340E99000973C7 /* DeletedTrackable.h */,
+				71E7087413340E99000973C7 /* DeletedTrackable.m */,
+				71E7086B13340E70000973C7 /* SyncTracker.h */,
+				71E7086C13340E70000973C7 /* SyncTracker.m */,
+				71E7086713340E6F000973C7 /* Trackable.h */,
+				71E7086813340E6F000973C7 /* Trackable.m */,
+				712B6DDE13325493004C8275 /* JSON.h */,
+				712B6DDF13325493004C8275 /* NSObject+SBJSON.h */,
+				712B6DE013325493004C8275 /* NSObject+SBJSON.m */,
+				712B6DE113325493004C8275 /* NSString+SBJSON.h */,
+				712B6DE213325493004C8275 /* NSString+SBJSON.m */,
+				712B6DE313325493004C8275 /* SBJsonBase.h */,
+				712B6DE413325493004C8275 /* SBJsonBase.m */,
+				712B6DE513325493004C8275 /* SBJsonParser.h */,
+				712B6DE613325493004C8275 /* SBJsonParser.m */,
+				712B6DE713325493004C8275 /* SBJsonWriter.h */,
+				712B6DE813325493004C8275 /* SBJsonWriter.m */,
+				712B6DD713325474004C8275 /* NSManagedObject+Dictionary.h */,
+				712B6DD813325474004C8275 /* NSManagedObject+Dictionary.m */,
+				712B6DCE1332545B004C8275 /* QCSync-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		712B6DC51332545B004C8275 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				712B6DD913325474004C8275 /* SynchronizedDB.h in Headers */,
+				712B6DDB13325474004C8275 /* EnterpriseSyncDelegate.h in Headers */,
+				712B6DDC13325474004C8275 /* NSManagedObject+Dictionary.h in Headers */,
+				712B6DE913325493004C8275 /* JSON.h in Headers */,
+				712B6DEA13325493004C8275 /* NSObject+SBJSON.h in Headers */,
+				712B6DEC13325493004C8275 /* NSString+SBJSON.h in Headers */,
+				712B6DEE13325493004C8275 /* SBJsonBase.h in Headers */,
+				712B6DF013325493004C8275 /* SBJsonParser.h in Headers */,
+				712B6DF213325493004C8275 /* SBJsonWriter.h in Headers */,
+				71E7086913340E6F000973C7 /* Trackable.h in Headers */,
+				71E7086D13340E70000973C7 /* SyncTracker.h in Headers */,
+				71E7087513340E99000973C7 /* DeletedTrackable.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		712B6DC61332545B004C8275 /* QCSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 712B6DD11332545B004C8275 /* Build configuration list for PBXNativeTarget "QCSync" */;
+			buildPhases = (
+				712B6DC31332545B004C8275 /* Sources */,
+				712B6DC41332545B004C8275 /* Frameworks */,
+				712B6DC51332545B004C8275 /* Headers */,
+				7181F975133927D2000AF5CA /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QCSync;
+			productName = QCSync;
+			productReference = 712B6DC71332545B004C8275 /* libQCSync.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		712B6DBE1332545B004C8275 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 712B6DC11332545B004C8275 /* Build configuration list for PBXProject "QCSync" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 712B6DBC1332545B004C8275;
+			productRefGroup = 712B6DC81332545B004C8275 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				712B6DC61332545B004C8275 /* QCSync */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7181F975133927D2000AF5CA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\n# combine lib files for various platforms into one\nlipo -create \"$BUILD_DIR/Release-iphoneos/libQCSync.a\" \"$BUILD_DIR/Release-iphonesimulator/libQCSync.a\" -output qc_dbsync.a";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		712B6DC31332545B004C8275 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				712B6DDA13325474004C8275 /* SynchronizedDB.m in Sources */,
+				712B6DDD13325474004C8275 /* NSManagedObject+Dictionary.m in Sources */,
+				712B6DEB13325493004C8275 /* NSObject+SBJSON.m in Sources */,
+				712B6DED13325493004C8275 /* NSString+SBJSON.m in Sources */,
+				712B6DEF13325493004C8275 /* SBJsonBase.m in Sources */,
+				712B6DF113325493004C8275 /* SBJsonParser.m in Sources */,
+				712B6DF313325493004C8275 /* SBJsonWriter.m in Sources */,
+				71E7086A13340E6F000973C7 /* Trackable.m in Sources */,
+				71E7086E13340E70000973C7 /* SyncTracker.m in Sources */,
+				71E7087613340E99000973C7 /* DeletedTrackable.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		712B6DCF1332545B004C8275 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		712B6DD01332545B004C8275 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		712B6DD21332545B004C8275 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/QCSync.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QCSync/QCSync-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		712B6DD31332545B004C8275 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/QCSync.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QCSync/QCSync-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		712B6DC11332545B004C8275 /* Build configuration list for PBXProject "QCSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				712B6DCF1332545B004C8275 /* Debug */,
+				712B6DD01332545B004C8275 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		712B6DD11332545B004C8275 /* Build configuration list for PBXNativeTarget "QCSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				712B6DD21332545B004C8275 /* Debug */,
+				712B6DD31332545B004C8275 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 712B6DBE1332545B004C8275 /* Project object */;
+}
