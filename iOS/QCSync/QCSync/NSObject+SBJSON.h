@@ -37,7 +37,7 @@
  of standard objects to the objects themselves. This means you can call the
  -JSONRepresentation method on an NSArray object and it'll do what you want.
  */
-@interface NSObject (NSObject_SBJSON)
+@interface NSObject (QC_NSObject_SBJSON)
 
 /*
  @brief Returns a string containing the receiver encoded in JSON.

@@ -30,10 +30,10 @@
 #import "NSObject+SBJSON.h"
 #import "SBJsonWriter.h"
 
-@implementation NSObject (NSObject_SBJSON)
+@implementation NSObject (QC_NSObject_SBJSON)
 
 - (NSString *)JSONRepresentation {
-    SBJsonWriter *jsonWriter = [SBJsonWriter new];    
+    QC_SBJsonWriter *jsonWriter = [QC_SBJsonWriter new];    
     NSString *json = [jsonWriter stringWithObject:self];
     if (!json)
         NSLog(@"-JSONRepresentation failed. Error trace is: %@", [jsonWriter errorTrace]);

@@ -2,7 +2,7 @@
 //  Trackable.m
 //  QC DBSync Example
 //
-//  Created by lee barney on 7/25/11.
+//  Created by lee barney on 7/30/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,9 +10,10 @@
 
 
 @implementation Trackable
-@dynamic updateTime;
-@dynamic eventType;
 @dynamic UUID;
+@dynamic eventType;
+@dynamic updateTime;
 @dynamic isRemoteData;
+@dynamic flaggedAsDeleted;
 
 @end

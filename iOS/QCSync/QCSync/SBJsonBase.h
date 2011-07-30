@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * SBJSONErrorDomain;
+extern NSString * QC_SBJSONErrorDomain;
 
 
 enum {
@@ -48,7 +48,7 @@ enum {
 };
 
 
-@interface SBJsonBase : NSObject {
+@interface QC_SBJsonBase : NSObject {
     NSMutableArray *errorTrace;
 
 @protected

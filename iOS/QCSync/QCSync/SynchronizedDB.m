@@ -21,12 +21,19 @@
  */
 
 #import "SynchronizedDB.h"
-#import "DeletedTrackable.h"
 #import "SyncTracker.h"
 #import "Trackable.h"
 #import "EnterpriseSyncDelegate.h"
 #import "JSON.h"
 #import "NSManagedObject+Dictionary.h"
+#import "NSManagedObjectContext_Sync.h"
+#import <objc/runtime.h> 
+#import <objc/message.h>
+
+
+
+
+
 
 
 @interface SynchronizedDB()
@@ -52,12 +59,45 @@
  * An initialization method for SynchronizedDB objects.
  */
 - (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword{
+    self.delegate = aCoreDataContainer;
+    /*
+     * Setup listening for changes in the Core Data managed context
+     * use notifications and the notification center to do so.
+     * This is similar to, but not the same as, triggers in a database.
+     */
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(dataChanged:)
+     name:NSManagedObjectContextDidSaveNotification
+     object:aCoreDataContainer.managedObjectContext];
+    /*
+     *  set up the swizzling for sync
+     */
+    //delete
+    SEL originalSelector = @selector(deleteObject:);
+    SEL overrideSelector = @selector(actualDeleteObject:);
+    Method originalMethod = class_getInstanceMethod([NSManagedObjectContext class], originalSelector);
+    Method overrideMethod = class_getInstanceMethod([NSManagedObjectContext class], overrideSelector);
+    if (class_addMethod([NSManagedObjectContext class], originalSelector, method_getImplementation(overrideMethod), method_getTypeEncoding(overrideMethod))) {
+        class_replaceMethod([NSManagedObjectContext class], overrideSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    } else {
+        method_exchangeImplementations(originalMethod, overrideMethod);
+    }
+    
+    //executeRequest
+    originalSelector = @selector(executeFetchRequest:error:);
+    overrideSelector = @selector(actualExecuteFetchRequest:error:);
+    originalMethod = class_getInstanceMethod([NSManagedObjectContext class], originalSelector);
+    overrideMethod = class_getInstanceMethod([NSManagedObjectContext class], overrideSelector);
+    if (class_addMethod([NSManagedObjectContext class], originalSelector, method_getImplementation(overrideMethod), method_getTypeEncoding(overrideMethod))) {
+        class_replaceMethod([NSManagedObjectContext class], overrideSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    } else {
+        method_exchangeImplementations(originalMethod, overrideMethod);
+    }
 
     self.theCoordinator = [aCoreDataContainer persistentStoreCoordinator];
     self.theCondition = [[NSCondition alloc] init];
     
-    //self->baseContext = [[NSManagedObjectContext alloc] init];
-    //[self->baseContext setPersistentStoreCoordinator: self.theCoordinator];
     
     
     /*
@@ -147,8 +187,10 @@
     
     
     NSEntityDescription *aTrackableDescription = [NSEntityDescription entityForName:@"Trackable" inManagedObjectContext:aContext];
-    NSEntityDescription *aDeletedTrackableDescription = [NSEntityDescription entityForName:@"DeletedTrackable" inManagedObjectContext:aContext];
+    //NSEntityDescription *aDeletedTrackableDescription = [NSEntityDescription entityForName:@"DeletedTrackable" inManagedObjectContext:aContext];
+    NSLog(@"deleted: %@     inserted: %@    modified: %@",deletedObjects,insertedObjects,updatedObjects);
     BOOL shouldSave = NO;
+    /*
 	for (NSManagedObject *aDeletedObject in deletedObjects) {
         Trackable *asTrackable = (Trackable*)aDeletedObject;
         if (asTrackable.isRemoteData) {
@@ -158,28 +200,25 @@
         /*
          *  Create a deleted trackable object for anything deleted
          *  that isn't a deleted trackable object
-         */
+         *
 		if([[aDeletedObject entity] isKindOfEntity:aTrackableDescription]
-           && ![[aDeletedObject entity] isKindOfEntity:aDeletedTrackableDescription]){
+           ){
             if (asTrackable.isRemoteData) {
                 asTrackable.isRemoteData = [NSNumber numberWithBool: NO];
                 continue;
             }
-			Trackable *deletedTrackable = (Trackable*)aDeletedObject;
+			//Trackable *deletedTrackable = (Trackable*)aDeletedObject;
 			//NSLog(@"deleted object: %@",deletedTrackable);/* 
-            /*
-             * create a DeletedTrackable
-             */
-			DeletedTrackable *aDeletedTrackable = (DeletedTrackable*)[NSEntityDescription insertNewObjectForEntityForName:@"DeletedTrackable" inManagedObjectContext:aContext];
-            aDeletedTrackable.UUID = deletedTrackable.UUID;
-            aDeletedTrackable.updateTime = updateTimeStamp;
+  
+            asTrackable.flagAsDeleted = [NSNumber numberWithBool: YES];
+            asTrackable.updateTime = updateTimeStamp;
             shouldSave = YES;
 		}
 	}
+*/
 
 	for (NSManagedObject *anInsertedObject in insertedObjects) {
-		if([[anInsertedObject entity] isKindOfEntity:aTrackableDescription] 
-           && ![[anInsertedObject entity] isKindOfEntity:aDeletedTrackableDescription]){
+		if([[anInsertedObject entity] isKindOfEntity:aTrackableDescription]){
             Trackable *asTrackable = (Trackable*)anInsertedObject;
             if (asTrackable.isRemoteData) {
                 asTrackable.isRemoteData = [NSNumber numberWithBool: NO];
@@ -193,8 +232,7 @@
 	}
 	
 	for (NSManagedObject *anUpdatedObject in updatedObjects) {
-		if([[anUpdatedObject entity] isKindOfEntity:aTrackableDescription] 
-           && ![[anUpdatedObject entity] isKindOfEntity:aDeletedTrackableDescription]){
+		if([[anUpdatedObject entity] isKindOfEntity:aTrackableDescription]){
             Trackable *asTrackable = (Trackable*)anUpdatedObject;
             NSLog(@"asTrackable %@",[asTrackable entity]);
             if (asTrackable.isRemoteData) {
@@ -267,6 +305,10 @@
     //[self.theCondition lock];
    NSLog(@"last sync time: %@",[[[theContext executeFetchRequest:request error:&error] objectAtIndex:0] lastSync]);
     NSDate *lastSync = theTracker.lastSync;
+    //in case of some sort of error set last sync so no exception is thrown.
+    if (!lastSync) {
+        lastSync = [NSDate distantPast];
+    }
     /*
      *  Add in a predicate to filter so that only Trackables with and update time after the last sync time are
      *  returned.
@@ -280,10 +322,10 @@
     //NSLog(@"predicate: %@",onlyNew);
     [request setPredicate:onlyNew];
     error = nil;
-    NSArray *trackables = [theContext executeFetchRequest:request error:&error];
-    for (int i = 0; i < [trackables count]; i++) {
+    NSArray *trackables = [theContext actualExecuteFetchRequest:request error:&error];
+    /*for (int i = 0; i < [trackables count]; i++) {
         NSLog(@"%@  %@",lastSync, [[trackables objectAtIndex:i] updateTime]);
-    }
+    }*/
     //NSLog(@"trackables: %@",trackables);
     [request release];
     /*
@@ -305,10 +347,16 @@
         NSLog(@"last sync: %@  update time: %@",lastSync,aTrackable.updateTime);
         if (![traversedTrackables containsObject:aTrackable]) {
             //NSLog(@"converting: %@",aTrackable);
-            NSDictionary *convertedTrackable = [aTrackable toDictionary:traversedTrackables inContext:theContext];
+            NSDictionary *convertedTrackable = nil;
+            if (aTrackable.flaggedAsDeleted) {
+                 NSString *syncType = [NSString stringWithFormat:@"sync_type_%@",[[aTrackable entity] name]];
+                NSDictionary *dataDict = [NSDictionary dictionaryWithObjectsAndKeys:@"delete",@"eventType",aTrackable.updateTime,@"updateTime",aTrackable.UUID,@"UUID", nil];
+                convertedTrackable = [NSDictionary dictionaryWithObjectsAndKeys:dataDict,syncType, nil];
+            }
+            else{
+                convertedTrackable = [aTrackable toDictionary:traversedTrackables inContext:theContext];
+            }
             NSLog(@"converted: %@",convertedTrackable);
-           // NSString *trackableClassName = NSStringFromClass([aTrackable class]);
-           // NSDictionary *description = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@_%@",aTrackable.eventType,trackableClassName] forKey:convertedTrackable];
             [syncData addObject:convertedTrackable];
         }
     }
@@ -317,11 +365,15 @@
 	 * JSON up the data to send
 	 */
 		
-	SBJsonWriter *aWriter = [[SBJsonWriter alloc] init];
+	QC_SBJsonWriter *aWriter = [[QC_SBJsonWriter alloc] init];
 	NSString *jsonString = [aWriter stringWithObject:dataToSend];
 	[aWriter release];
 	NSLog(@"sendString: %@",jsonString);
 	BOOL success = YES;
+    
+    NSUndoManager *undoManager = [[NSUndoManager alloc] init];
+    [theContext setUndoManager:undoManager];
+    [undoManager beginUndoGrouping];
     @try {
         
    
@@ -341,121 +393,171 @@
             
             [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(onFailure:) withObject:error waitUntilDone:NO];
             
-            return NO;
+            success = NO;
         }
-        NSString *responseJsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
-        NSMutableString *modifiedJsonString = [NSMutableString stringWithString:responseJsonString];
-        [modifiedJsonString replaceOccurrencesOfString:@"\\" withString:@"" 
-                                         options:NSCaseInsensitiveSearch 
-                                           range:NSMakeRange(0, [modifiedJsonString length])];
-        
-                              
-        //NSLog(@"response:'%@'   error: %@",responseJsonString,error);
+        if(success){
+            NSString *responseJsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            
+            NSMutableString *modifiedJsonString = [NSMutableString stringWithString:responseJsonString];
+            [modifiedJsonString replaceOccurrencesOfString:@"\\" withString:@"" 
+                                             options:NSCaseInsensitiveSearch 
+                                               range:NSMakeRange(0, [modifiedJsonString length])];
+            
+                                  
+            //NSLog(@"response:'%@'   error: %@",responseJsonString,error);
 
-        
-        /*
-         *  delete the trackables representing deletions since sync was successful
-         */
-        NSFetchRequest *existingSyncEntriesRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *theDescription = [NSEntityDescription entityForName:@"DeletedTrackable" inManagedObjectContext:theContext];
-        [existingSyncEntriesRequest setEntity:theDescription];
-        error = nil;
-        NSArray *oldDeletedTrackables = [theContext executeFetchRequest:existingSyncEntriesRequest error:&error];
-        for(int i = 0; i < [oldDeletedTrackables count]; i++){
-            DeletedTrackable *aTrackable = (DeletedTrackable*)[oldDeletedTrackables objectAtIndex:i];
-            [theContext deleteObject:aTrackable];
-        }
-        
-        /*
-         *  parse the JSON for insertion
-         */
-        NSLog(@"response string:'%@'",responseJsonString);
-        SBJsonParser* aParser = [[SBJsonParser alloc] init];
-        NSDictionary* syncInformation = [aParser objectWithString:responseJsonString];
-        NSLog(@"response object:'%@'",syncInformation);
-        [aParser release];
-        NSString* syncTimeString = [syncInformation objectForKey:@"sync_time"];
-        NSDateFormatter* aFormatter = [[NSDateFormatter alloc] init];
-        [aFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        
-        NSTimeZone* utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
-        [aFormatter setTimeZone:utcTimeZone];
-        NSDate* syncTimeFromServer = [aFormatter dateFromString:syncTimeString];
-        [aFormatter release];
-        
-        /*
-         *  set the last sync time of the SyncData object to be the time sent from the server.
-         */
-        
-        theTracker.lastSync = syncTimeFromServer;
-        
-        
-        /*
-         * retreive the array of objects to sync
-         */
-        NSArray *resultDataTable = [syncInformation objectForKey:@"sync_data"];
-        NSLog(@"result data only: %@",resultDataTable);
-        int numData = [resultDataTable count];
-        for(int i = 0; i < numData; i++){
+            
+            
+            
             /*
-             *  Need to parse the data correctly and insert them into the store.
+             *  parse the JSON for insertion
              */
-            //NSArray *aRow = [resultDataTable objectAtIndex:i];
-            //if there is no data in the row move to the next row
-            //if ([aRow count] == 0) {
-            //    continue;
-            //}
-            //NSDictionary *aData = [aRow objectAtIndex:0];
-            NSDictionary *aData = [resultDataTable objectAtIndex:i];
-            //NSLog(@"aData: %@",aData);
-            if ([aData count] > 1) {
-                
-                // Make underlying error.
-                NSError *underlyingError = [[[NSError alloc] initWithDomain:NSPOSIXErrorDomain
-                                                                       code:errno userInfo:nil] autorelease];
-                // Make and return custom domain error.
-                NSArray *objArray = [NSArray arrayWithObjects:@"To many keys in data returned.", underlyingError, @"sync:", nil];
-                NSArray *keyArray = [NSArray arrayWithObjects:NSLocalizedDescriptionKey,
-                                     NSUnderlyingErrorKey, NSFilePathErrorKey, nil];
-                NSDictionary *eDict = [NSDictionary dictionaryWithObjects:objArray
-                                                                  forKeys:keyArray];
-                
-                NSError *anError = [[[NSError alloc] initWithDomain:@"org.quickconnectfamily.qcsync"
-                                                               code:2 userInfo:eDict] autorelease];
-                
-                [self.delegate onFailure:anError];
-                return NO;
-            }
-            NSError *error = nil;
-            [self buildObjectFromDictionary:aData inContext:theContext error:&error];
-            if (error) {
-                //build error;
-            }
-        }
-        
-        //NSLog(@"context %@",theContext);
-        //self->theBaseContext works
-        if (![theContext save:&error]) {
-            // Handle the error.
-            //NSLog(@"error: %@",error);
-            NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
-            if(detailedErrors != nil && [detailedErrors count] > 0) {
-                for(NSError* detailedError in detailedErrors) {
-                    NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+            NSLog(@"response string:'%@'",responseJsonString);
+            QC_SBJsonParser* aParser = [[QC_SBJsonParser alloc] init];
+            NSDictionary* syncInformation = [aParser objectWithString:responseJsonString];
+            NSLog(@"response object:'%@'",syncInformation);
+            [aParser release];
+            NSString* syncTimeString = [syncInformation objectForKey:@"sync_time"];
+            NSDateFormatter* aFormatter = [[NSDateFormatter alloc] init];
+            [aFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            
+            NSTimeZone* utcTimeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
+            [aFormatter setTimeZone:utcTimeZone];
+            NSDate* syncTimeFromServer = [aFormatter dateFromString:syncTimeString];
+            [aFormatter release];
+            
+            /*
+             *  set the last sync time of the SyncData object to be the time sent from the server.
+             */
+            
+            theTracker.lastSync = syncTimeFromServer;
+            
+            /*
+             * retreive the array of objects to sync
+             */
+            NSArray *resultDataTable = [syncInformation objectForKey:@"sync_data"];
+            NSLog(@"result data only: %@",resultDataTable);
+            int numData = [resultDataTable count];
+            NSEntityDescription *trackableDescription = [NSEntityDescription entityForName:@"Trackable" inManagedObjectContext:theContext];
+            for(int i = 0; i < numData; i++){
+                /*
+                 *  Need to parse the data correctly and insert them into the store.
+                 */
+                //NSArray *aRow = [resultDataTable objectAtIndex:i];
+                //if there is no data in the row move to the next row
+                //if ([aRow count] == 0) {
+                //    continue;
+                //}
+                //NSDictionary *aData = [aRow objectAtIndex:0];
+                NSDictionary *aData = [resultDataTable objectAtIndex:i];
+                NSLog(@"aData: %@",aData);
+                //bad data sent from server
+                if ([aData count] > 1) {
+                    
+                    // Make underlying error.
+                    NSError *underlyingError = [[[NSError alloc] initWithDomain:NSPOSIXErrorDomain
+                                                                           code:errno userInfo:nil] autorelease];
+                    // Make and return custom domain error.
+                    NSArray *objArray = [NSArray arrayWithObjects:@"To many keys in data returned.", underlyingError, @"sync:", nil];
+                    NSArray *keyArray = [NSArray arrayWithObjects:NSLocalizedDescriptionKey,
+                                         NSUnderlyingErrorKey, NSFilePathErrorKey, nil];
+                    NSDictionary *eDict = [NSDictionary dictionaryWithObjects:objArray
+                                                                      forKeys:keyArray];
+                    
+                    NSError *anError = [[[NSError alloc] initWithDomain:@"org.quickconnectfamily.qcsync"
+                                                                   code:2 userInfo:eDict] autorelease];
+                    
+                    [self.delegate onFailure:anError];
+                    success = NO;
+                    break;
+                }
+                NSArray *values = [aData allValues];
+                NSDictionary *dataValue = [values objectAtIndex:0];
+                if([[dataValue objectForKey:@"eventType"] isEqualToString:@"delete"]){
+                    NSString *aUUID = [dataValue objectForKey:@"UUID"];
+                    if (!aUUID) {
+                        // Make underlying error.
+                        NSError *underlyingError = [[[NSError alloc] initWithDomain:NSPOSIXErrorDomain
+                                                                               code:errno userInfo:nil] autorelease];
+                        // Make and return custom domain error.
+                        NSArray *objArray = [NSArray arrayWithObjects:@"Missing UUID in delete message.", underlyingError, @"sync:", nil];
+                        NSArray *keyArray = [NSArray arrayWithObjects:NSLocalizedDescriptionKey,
+                                             NSUnderlyingErrorKey, NSFilePathErrorKey, nil];
+                        NSDictionary *eDict = [NSDictionary dictionaryWithObjects:objArray
+                                                                          forKeys:keyArray];
+                        
+                        NSError *anError = [[[NSError alloc] initWithDomain:@"org.quickconnectfamily.qcsync"
+                                                                       code:2 userInfo:eDict] autorelease];
+                        
+                        [self.delegate onFailure:anError];
+                        success = NO;
+                        break;
+                    }
+                    
+                    NSFetchRequest *updateToDeleteRequest = [[NSFetchRequest alloc] init];
+                    [updateToDeleteRequest setEntity:trackableDescription];
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"UUID == [c]%@", aUUID];
+                    [updateToDeleteRequest setPredicate:predicate];
+                    NSError *aFetchError = nil;
+                    NSMutableArray *foundEntities = [[theContext actualExecuteFetchRequest:updateToDeleteRequest error:&aFetchError] mutableCopy];
+                    //even though only one entity should be found modify them all
+                    for (Trackable *foundEntity in foundEntities) {
+                        NSLog(@"UUID: %@    deleting: %@",foundEntity.UUID,[foundEntity entity]);
+                        //set the objects found to be deleted later in this method when all entities that are flagged are deleted.
+                        foundEntity.flaggedAsDeleted = [NSNumber numberWithBool:YES];
+                    }
+                }
+                //must be create or update
+                else{
+                    NSError *conversionError = nil;
+                    [self buildObjectFromDictionary:aData inContext:theContext error:&conversionError];
+                    if (conversionError) {
+                        //build error;
+                        NSLog(@"coversion from dictionary %@ to ManagedObject failed.  %@",aData, conversionError.localizedFailureReason);
+                        success = NO;
+                        break;
+                    }
                 }
             }
-            else {
-                NSLog(@"  %@", [error userInfo]);
+            if (success) {
+                /*
+                 *  delete the trackables representing deletions since sync was successful
+                 */
+                NSFetchRequest *deleteSyncEntriesRequest = [[NSFetchRequest alloc] init];
+                [deleteSyncEntriesRequest setEntity:trackableDescription];
+                NSPredicate *deletedPredicate = [NSPredicate predicateWithFormat:@"flaggedAsDeleted == %@", [NSNumber numberWithBool:YES]];
+                [deleteSyncEntriesRequest setPredicate:deletedPredicate];
+                
+                error = nil;
+                NSArray *oldDeletedTrackables = [theContext actualExecuteFetchRequest:deleteSyncEntriesRequest error:&error];
+                for(int i = 0; i < [oldDeletedTrackables count]; i++){
+                    Trackable *aTrackable = (Trackable*)[oldDeletedTrackables objectAtIndex:i];
+                    [theContext actualDeleteObject:aTrackable];
+                }
+                
+                //NSLog(@"context %@",theContext);
+                //self->theBaseContext works
+                if (![theContext save:&error]) {
+                    // Handle the error.
+                    //NSLog(@"error: %@",error);
+                    NSArray* detailedErrors = [[error userInfo] objectForKey:NSDetailedErrorsKey];
+                    if(detailedErrors != nil && [detailedErrors count] > 0) {
+                        for(NSError* detailedError in detailedErrors) {
+                            NSLog(@"  DetailedError: %@", [detailedError userInfo]);
+                        }
+                    }
+                    else {
+                        NSLog(@"  %@", [error userInfo]);
+                    }
+                    [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(onFailure:) withObject:error waitUntilDone:NO];
+                }
+                else{
+                    [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(saveContext) withObject:error waitUntilDone:YES];
+
+                    [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(onSuccess) withObject:error waitUntilDone:NO];
+                }
             }
-            [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(onFailure:) withObject:error waitUntilDone:NO];
         }
-        else{
-            [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(saveContext) withObject:error waitUntilDone:YES];
-
-            [((NSObject*)self.delegate) performSelectorOnMainThread:@selector(onSuccess) withObject:error waitUntilDone:NO];
-        }
-
     }
     @catch (NSException *exception) {
         NSString *description = [exception description];
@@ -478,6 +580,11 @@
         self->loggedIn = NO;
         success = NO;
     }
+    [undoManager endUndoGrouping];
+    if (!success) {
+        [undoManager undo];
+    }
+    [undoManager release];
 	//[self.theCondition unlock];
     return success;
 
@@ -529,7 +636,7 @@
          */
         NSArray * allDescriptionKeys = [anObjectDescription allKeys];
         for (NSString *aKey in allDescriptionKeys) {
-            if ([aKey isEqualToString:@"eventType"]) {
+            if ([aKey isEqualToString:@"eventType"] || [aKey isEqualToString:@"flaggedAsDeleted"]) {
                 continue;
             }
             NSObject *aValue = [anObjectDescription objectForKey:aKey];
@@ -618,7 +725,7 @@
                 }
                 //need to create the object
                 else{
-                    NSError *anError;
+                    NSError *anError = nil;
                     relatedObject = [self buildObjectFromDictionary:valueAsDictionary inContext:theContext error:&anError];
                     if (anError) {
                         //set error pointer
@@ -655,9 +762,25 @@
 
     }
     else if([operationType isEqualToString:@"delete"]){
-        //get the existing object.
-        
-        //remove from storage
+        NSString *aUUID = [anObjectDescription objectForKey:@"UUID"];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:className 
+                                                  inManagedObjectContext:theContext];
+        //see if the entity already exists
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:entity];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"UUID == [c]%@", aUUID];
+        [request setPredicate:predicate];
+        NSError *aFetchError = nil;
+        NSMutableArray *foundEntities = [[theContext executeFetchRequest:request error:&aFetchError] mutableCopy];
+        //there should only be one but remove any that are found.
+        if ([foundEntities count] > 0) {
+            for (NSManagedObject* anEntityToDelete in foundEntities) {
+                [theContext deleteObject:anEntityToDelete];
+            }
+        }
+
+        returnEntity = nil;
+    
     }
     return returnEntity;
 }

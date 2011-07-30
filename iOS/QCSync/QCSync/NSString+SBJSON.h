@@ -34,7 +34,7 @@
  
 This is a category on NSString that adds methods for parsing the target string.
 */
-@interface NSString (NSString_SBJSON)
+@interface NSString (QC_NSString_SBJSON)
 
 /*
  @brief Returns the NSDictionary or NSArray represented by the current string's JSON representation.

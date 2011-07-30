@@ -51,7 +51,7 @@
  We can thus avoid any loss of precision as JSON allows ridiculously large numbers.
  
  */
-@interface SBJsonParser : SBJsonBase {
+@interface QC_SBJsonParser : QC_SBJsonBase {
     
 @private
     const char *c;

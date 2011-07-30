@@ -28,8 +28,8 @@
 		71E7086A13340E6F000973C7 /* Trackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7086813340E6F000973C7 /* Trackable.m */; };
 		71E7086D13340E70000973C7 /* SyncTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E7086B13340E70000973C7 /* SyncTracker.h */; };
 		71E7086E13340E70000973C7 /* SyncTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7086C13340E70000973C7 /* SyncTracker.m */; };
-		71E7087513340E99000973C7 /* DeletedTrackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 71E7087313340E99000973C7 /* DeletedTrackable.h */; };
-		71E7087613340E99000973C7 /* DeletedTrackable.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E7087413340E99000973C7 /* DeletedTrackable.m */; };
+		9B5C153E13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B5C153C13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.h */; };
+		9B5C153F13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B5C153D13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,9 +56,9 @@
 		71E7086813340E6F000973C7 /* Trackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trackable.m; sourceTree = "<group>"; };
 		71E7086B13340E70000973C7 /* SyncTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncTracker.h; sourceTree = "<group>"; };
 		71E7086C13340E70000973C7 /* SyncTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncTracker.m; sourceTree = "<group>"; };
-		71E7087313340E99000973C7 /* DeletedTrackable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeletedTrackable.h; sourceTree = "<group>"; };
-		71E7087413340E99000973C7 /* DeletedTrackable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeletedTrackable.m; sourceTree = "<group>"; };
 		9B2472D5136CA5C4004CC4B7 /* Build Instructions!!!!.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Build Instructions!!!!.txt"; sourceTree = "<group>"; };
+		9B5C153C13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSManagedObjectContext_Sync.h; sourceTree = "<group>"; };
+		9B5C153D13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSManagedObjectContext_Sync.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +113,6 @@
 		712B6DCD1332545B004C8275 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				71E7087313340E99000973C7 /* DeletedTrackable.h */,
-				71E7087413340E99000973C7 /* DeletedTrackable.m */,
 				71E7086B13340E70000973C7 /* SyncTracker.h */,
 				71E7086C13340E70000973C7 /* SyncTracker.m */,
 				71E7086713340E6F000973C7 /* Trackable.h */,
@@ -132,6 +130,8 @@
 				712B6DE813325493004C8275 /* SBJsonWriter.m */,
 				712B6DD713325474004C8275 /* NSManagedObject+Dictionary.h */,
 				712B6DD813325474004C8275 /* NSManagedObject+Dictionary.m */,
+				9B5C153C13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.h */,
+				9B5C153D13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.m */,
 				712B6DCE1332545B004C8275 /* QCSync-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -155,7 +155,7 @@
 				712B6DF213325493004C8275 /* SBJsonWriter.h in Headers */,
 				71E7086913340E6F000973C7 /* Trackable.h in Headers */,
 				71E7086D13340E70000973C7 /* SyncTracker.h in Headers */,
-				71E7087513340E99000973C7 /* DeletedTrackable.h in Headers */,
+				9B5C153E13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,7 +232,7 @@
 				712B6DF313325493004C8275 /* SBJsonWriter.m in Sources */,
 				71E7086A13340E6F000973C7 /* Trackable.m in Sources */,
 				71E7086E13340E70000973C7 /* SyncTracker.m in Sources */,
-				71E7087613340E99000973C7 /* DeletedTrackable.m in Sources */,
+				9B5C153F13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

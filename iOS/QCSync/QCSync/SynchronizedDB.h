@@ -82,8 +82,7 @@
 /**
  Returns an initialized SynchronizedDB object that is ready to sync any changes made to the data store.  
  This method also attempts to login the service using the user name and password.
- @param aCoordinator The coordinator for the data store
- @param aContext The context for the data store in which queries, insertions, and deletions are made
+ @param aCoreDataContainer The instance that has the managedObjectContext as an attribute.  If Xcode generated your CoreData code for you this is your app delegate
  @param aURLString the url to the web app or service that is the front end for the remote database
  @param aUserName the user name on the remote app or service that has rights to access the app or service
  @param aPassword the password for the user on the remote app or service that has rights to access the app or service
@@ -94,7 +93,7 @@
  Attempt to login.  This is used if at any time the connection is lost to the remote service.
  @param userName The user name for the remote service
  @param password The password for the remote service
- @returns YES on success or NO on failure.
+ @returns a BOOL value indicating if login request is sent successfully.  Does not indicate successful login.
  */
 - (BOOL) attemptRemoteLogin:(NSString*)userName withPassword:(NSString*)password;
 /**
