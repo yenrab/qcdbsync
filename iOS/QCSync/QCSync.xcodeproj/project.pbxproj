@@ -214,7 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\n# combine lib files for various platforms into one\nlipo -create \"$BUILD_DIR/Release-iphoneos/libQCSync.a\" \"$BUILD_DIR/Release-iphonesimulator/libQCSync.a\" -output qc_dbsync.a";
+			shellScript = "\n# combine lib files for various platforms into one\nlipo -create \"$BUILD_DIR/Release-iphoneos/libQCSync.a\" \"$BUILD_DIR/Release-iphonesimulator/libQCSync.a\" -output qc_dbsync.a\n\necho \"path: $DOXYGEN_PATH\"\n\n#  Build the doxygen documentation for the project and load the docset into Xcode.\n\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to\n#   a get default file.\n\nif ! [ -f $SOURCE_ROOT/doxygen.config ]\nthen\necho doxygen config file does not exist\n/Applications/Doxygen.app/Contents/Resources/doxygen -g $SOURCE_ROOT/doxygen.config\nfi\n/Applications/Doxygen.app/Contents/Resources/doxygen $SOURCE_ROOT/doxygen.config\n\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 

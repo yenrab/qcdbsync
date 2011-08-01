@@ -29,20 +29,10 @@
 
 #import <Foundation/Foundation.h>
 
-/*
- @brief Adds JSON parsing methods to NSString
- 
-This is a category on NSString that adds methods for parsing the target string.
-*/
+
 @interface NSString (QC_NSString_SBJSON)
 
-/*
- @brief Returns the NSDictionary or NSArray represented by the current string's JSON representation.
- 
- Returns the dictionary or array represented in the receiver, or nil on error.
 
- Returns the NSDictionary or NSArray represented by the current string's JSON representation.
- */
 - (id)JSONValue;
 
 @end

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>QCDBSync: Class Members</title>
+<title>QCDBSync: QCSync/NSManagedObjectContext_Sync.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
@@ -30,8 +30,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li id="searchli">
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -52,49 +52,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
     </ul>
   </div>
-  <div id="navrow3" class="tabs2">
-    <ul class="tablist">
-      <li class="current"><a href="functions.html"><span>All</span></a></li>
-      <li><a href="functions_func.html"><span>Functions</span></a></li>
-      <li><a href="functions_prop.html"><span>Properties</span></a></li>
-    </ul>
-  </div>
+<div class="header">
+  <div class="headertitle">
+<div class="title">QCSync/NSManagedObjectContext_Sync.h</div>  </div>
 </div>
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
-<li>delegate
-: <a class="el" href="interface_synchronized_d_b.html#a6a6374fd7c2878a4814d75f8cee3269c">SynchronizedDB</a>
-</li>
-<li>init:withService:userName:password:
-: <a class="el" href="interface_synchronized_d_b.html#ac6a59dcb64104f85d48bb4a2dae03efd">SynchronizedDB</a>
-</li>
-<li>managedObjectContext
-: <a class="el" href="protocol_enterprise_sync_delegate-p.html#ab84343f7265673f1c2169acdd2a46a86">&lt;EnterpriseSyncDelegate&gt;</a>
-</li>
-<li>onFailure:
-: <a class="el" href="protocol_enterprise_sync_delegate-p.html#acc7d647c0dd26008c54ff6c3332f4cdc">&lt;EnterpriseSyncDelegate&gt;</a>
-</li>
-<li>onSuccess
-: <a class="el" href="protocol_enterprise_sync_delegate-p.html#ad58ceecd0a85bf8d7afca7054bdeac3e">&lt;EnterpriseSyncDelegate&gt;</a>
-</li>
-<li>persistentStoreCoordinator
-: <a class="el" href="protocol_enterprise_sync_delegate-p.html#ace7ad34513f8a39ea1e884105fab16ab">&lt;EnterpriseSyncDelegate&gt;</a>
-</li>
-<li>saveContext
-: <a class="el" href="protocol_enterprise_sync_delegate-p.html#a080b9d83e87030496a827f7ea693fecd">&lt;EnterpriseSyncDelegate&gt;</a>
-</li>
-<li>sync
-: <a class="el" href="interface_synchronized_d_b.html#a45dd2c4b1858e42e380f4132af17e414">SynchronizedDB</a>
-</li>
-<li>UUIDString
-: <a class="el" href="interface_synchronized_d_b.html#a447000f5accc855b428103800ba46aa2">SynchronizedDB</a>
-</li>
-</ul>
+<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">//</span>
+<a name="l00002"></a>00002 <span class="comment">//  NSManagedObjectContext_SyncDelete.h</span>
+<a name="l00003"></a>00003 <span class="comment">//  QCSync</span>
+<a name="l00004"></a>00004 <span class="comment">//</span>
+<a name="l00005"></a>00005 <span class="comment">//  Created by lee barney on 7/30/11.</span>
+<a name="l00006"></a>00006 <span class="comment">//  Copyright 2011 __MyCompanyName__. All rights reserved.</span>
+<a name="l00007"></a>00007 <span class="comment">//</span>
+<a name="l00008"></a>00008 
+<a name="l00009"></a>00009 <span class="preprocessor">#import &lt;CoreData/CoreData.h&gt;</span>
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="keyword">@interface </span>NSManagedObjectContext (NSManagedObjectContext_SyncDelete)
+<a name="l00012"></a>00012 
+<a name="l00013"></a>00013 -(void)actualDeleteObject:(NSManagedObject*) objectToDelete;
+<a name="l00014"></a>00014 - (NSArray *)actualExecuteFetchRequest:(NSFetchRequest *)request error:(NSError **)error;
+<a name="l00015"></a>00015 <span class="keyword">@end</span>
+<a name="l00016"></a>00016 
+</pre></div></div>
 </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"

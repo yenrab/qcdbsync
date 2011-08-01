@@ -46,23 +46,30 @@
  */
 
 
+
+
+
 #import <CoreData/CoreData.h>
 #import "EnterpriseSyncDelegate.h"
 
 @class SyncData;
 
-
 /**
- SynchronizedDB is used to keep your CoreData datastore in sync with a remote database of your choice.  
+ This is the primary class of QCDBSync.  alloc and init it in your application's AppDelegate or some other file as you feel is appropriate.
+ 
+ Once an object of this type is initialized use its sync method to synchronize your data.  It is suggested that the sync call should be made from a background thread 
+ or your apps UI will be sluggish.  
  */
-@interface SynchronizedDB :  NSManagedObject
+
+
+
+@interface SynchronizedDB :  NSObject
 {
 	NSMutableDictionary *changes;
 	NSMutableData *resultData;
 	NSURL *url;
 	NSCondition *theCondition;
 	NSPersistentStoreCoordinator* theCoordinator;
-    //NSManagedObjectContext *baseContext;
     /**
      The delegate notified on sync completion or failure
      */
@@ -82,14 +89,14 @@
 /**
  Returns an initialized SynchronizedDB object that is ready to sync any changes made to the data store.  
  This method also attempts to login the service using the user name and password.
- @param aCoreDataContainer The instance that has the managedObjectContext as an attribute.  If Xcode generated your CoreData code for you this is your app delegate
+ @param aCoreDataContainer The <b>EnterpriseSyncDelegate</b> instance that has the managedObjectContext as an attribute.  If Xcode generated your CoreData code for you this is your app delegate
  @param aURLString the url to the web app or service that is the front end for the remote database
  @param aUserName the user name on the remote app or service that has rights to access the app or service
  @param aPassword the password for the user on the remote app or service that has rights to access the app or service
  @returns an initialized SynchronizedDB object that is waiting to sync with a remote app or service if login succeeds
  */
 - (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword;
-/**
+/*
  Attempt to login.  This is used if at any time the connection is lost to the remote service.
  @param userName The user name for the remote service
  @param password The password for the remote service
