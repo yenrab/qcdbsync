@@ -119,11 +119,17 @@ static NSMutableCharacterSet *kEscapeChars;
         }
     }
 	else if([fragment isKindOfClass:[NSDate class]]){
-		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-		//NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
-		//[dateFormatter setTimeZone:timeZone];
-		[dateFormatter setDateFormat:@"yyy-MM-dd HH:mm:ss"];
-		NSString *dateString = [dateFormatter stringFromDate:fragment];
+        NSString *dateString = nil;
+        if ([((NSDate*)fragment) compare:[NSDate distantPast]] == NSOrderedSame) {
+            dateString = @"0001-01-01 00:00:00";
+        }
+        else{
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            //NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+            //[dateFormatter setTimeZone:timeZone];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            dateString = [dateFormatter stringFromDate:fragment];
+        }
 		[json appendString:[NSString stringWithFormat:@"\"%@\"",dateString]];
 	}else if ([fragment isKindOfClass:[NSNull class]]) {
         [json appendString:@"null"];

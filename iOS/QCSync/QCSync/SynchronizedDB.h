@@ -77,6 +77,7 @@
     BOOL loggedIn;
     NSString *uName;
     NSString *pWord;
+    BOOL usesJSONService;
 }
 @property (nonatomic, retain) NSDictionary *changes;
 @property (nonatomic, retain) NSMutableData *resultData;
@@ -85,6 +86,7 @@
 @property (nonatomic, retain) NSCondition *theCondition;
 @property (nonatomic, retain) NSPersistentStoreCoordinator* theCoordinator;
 @property (readonly) BOOL loggedIn;
+@property (readwrite) BOOL usesJSONService;
 
 /**
  Returns an initialized SynchronizedDB object that is ready to sync any changes made to the data store.  
@@ -93,9 +95,21 @@
  @param aURLString the url to the web app or service that is the front end for the remote database
  @param aUserName the user name on the remote app or service that has rights to access the app or service
  @param aPassword the password for the user on the remote app or service that has rights to access the app or service
+ @param isJSONServiceFlag a BOOL.  If YES then the service is a JSON RPC service.  If NO the service communicates via forms.
  @returns an initialized SynchronizedDB object that is waiting to sync with a remote app or service if login succeeds
  */
-- (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword;
+- (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword isJSONService:(BOOL)isJSONServiceFlag;
+
+
+/**
+ Returns an initialized SynchronizedDB object that is ready to sync any changes made to the data store.
+ @param aCoreDataContainer The <b>EnterpriseSyncDelegate</b> instance that has the managedObjectContext as an attribute.  If Xcode generated your CoreData code for you this is your app delegate
+ @param aURLString the url to the web app or service that is the front end for the remote database
+ @param isJSONServiceFlag a BOOL.  If YES then the service is a JSON RPC service.  If NO the service communicates via forms.
+ @returns an initialized SynchronizedDB object that is ready for a login command
+ */
+- (SynchronizedDB*)initWithDelegate:(id<EnterpriseSyncDelegate>)aCoreDataContainer toService:(NSString*)aURLString isJSONService:(BOOL)isJSONServiceFlag;
+
 /*
  Attempt to login.  This is used if at any time the connection is lost to the remote service.
  @param userName The user name for the remote service

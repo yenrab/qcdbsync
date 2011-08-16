@@ -99,30 +99,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00077"></a>00077     BOOL loggedIn;
 <a name="l00078"></a>00078     NSString *uName;
 <a name="l00079"></a>00079     NSString *pWord;
-<a name="l00080"></a>00080 }
-<a name="l00081"></a>00081 <span class="keyword">@property</span> (nonatomic, retain) NSDictionary *changes;
-<a name="l00082"></a>00082 <span class="keyword">@property</span> (nonatomic, retain) NSMutableData *resultData;
-<a name="l00083"></a>00083 <span class="keyword">@property</span> (nonatomic, retain) NSURL *url;
-<a name="l00084"></a>00084 <span class="keyword">@property</span> (nonatomic, retain) id&lt;EnterpriseSyncDelegate&gt; delegate;
-<a name="l00085"></a>00085 <span class="keyword">@property</span> (nonatomic, retain) NSCondition *theCondition;
-<a name="l00086"></a>00086 <span class="keyword">@property</span> (nonatomic, retain) NSPersistentStoreCoordinator* theCoordinator;
-<a name="l00087"></a>00087 <span class="keyword">@property</span> (readonly) BOOL loggedIn;
-<a name="l00088"></a>00088 
-<a name="l00098"></a>00098 - (<a class="code" href="interface_synchronized_d_b.html">SynchronizedDB</a>*)init:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_enterprise_sync_delegate-p.html">EnterpriseSyncDelegate</a>&gt;)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword;
-<a name="l00099"></a>00099 <span class="comment">/*</span>
-<a name="l00100"></a>00100 <span class="comment"> Attempt to login.  This is used if at any time the connection is lost to the remote service.</span>
-<a name="l00101"></a>00101 <span class="comment"> @param userName The user name for the remote service</span>
-<a name="l00102"></a>00102 <span class="comment"> @param password The password for the remote service</span>
-<a name="l00103"></a>00103 <span class="comment"> @returns a BOOL value indicating if login request is sent successfully.  Does not indicate successful login.</span>
-<a name="l00104"></a>00104 <span class="comment"> */</span>
-<a name="l00105"></a>00105 - (BOOL) attemptRemoteLogin:(NSString*)userName withPassword:(NSString*)password;
-<a name="l00110"></a>00110 - (BOOL)sync;
-<a name="l00115"></a>00115 + (NSString*)UUIDString;
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117 <span class="keyword">@end</span>
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120 
+<a name="l00080"></a>00080     BOOL usesJSONService;
+<a name="l00081"></a>00081 }
+<a name="l00082"></a>00082 <span class="keyword">@property</span> (nonatomic, retain) NSDictionary *changes;
+<a name="l00083"></a>00083 <span class="keyword">@property</span> (nonatomic, retain) NSMutableData *resultData;
+<a name="l00084"></a>00084 <span class="keyword">@property</span> (nonatomic, retain) NSURL *url;
+<a name="l00085"></a>00085 <span class="keyword">@property</span> (nonatomic, retain) id&lt;EnterpriseSyncDelegate&gt; delegate;
+<a name="l00086"></a>00086 <span class="keyword">@property</span> (nonatomic, retain) NSCondition *theCondition;
+<a name="l00087"></a>00087 <span class="keyword">@property</span> (nonatomic, retain) NSPersistentStoreCoordinator* theCoordinator;
+<a name="l00088"></a>00088 <span class="keyword">@property</span> (readonly) BOOL loggedIn;
+<a name="l00089"></a>00089 <span class="keyword">@property</span> (readwrite) BOOL usesJSONService;
+<a name="l00090"></a>00090 
+<a name="l00101"></a>00101 - (<a class="code" href="interface_synchronized_d_b.html">SynchronizedDB</a>*)init:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_enterprise_sync_delegate-p.html">EnterpriseSyncDelegate</a>&gt;)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword isJSONService:(BOOL)isJSONServiceFlag;
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103 
+<a name="l00111"></a>00111 - (<a class="code" href="interface_synchronized_d_b.html">SynchronizedDB</a>*)initWithDelegate:(<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_enterprise_sync_delegate-p.html">EnterpriseSyncDelegate</a>&gt;)aCoreDataContainer toService:(NSString*)aURLString isJSONService:(BOOL)isJSONServiceFlag;
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 <span class="comment">/*</span>
+<a name="l00114"></a>00114 <span class="comment"> Attempt to login.  This is used if at any time the connection is lost to the remote service.</span>
+<a name="l00115"></a>00115 <span class="comment"> @param userName The user name for the remote service</span>
+<a name="l00116"></a>00116 <span class="comment"> @param password The password for the remote service</span>
+<a name="l00117"></a>00117 <span class="comment"> @returns a BOOL value indicating if login request is sent successfully.  Does not indicate successful login.</span>
+<a name="l00118"></a>00118 <span class="comment"> */</span>
+<a name="l00119"></a>00119 - (BOOL) attemptRemoteLogin:(NSString*)userName withPassword:(NSString*)password;
+<a name="l00124"></a>00124 - (BOOL)sync;
+<a name="l00129"></a>00129 + (NSString*)UUIDString;
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 <span class="keyword">@end</span>
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 
 </pre></div></div>
 </div>
 <!-- window showing the filter options -->
@@ -139,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 1 2011 15:45:44 for QCDBSync by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 16 2011 13:54:06 for QCDBSync by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

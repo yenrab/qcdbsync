@@ -76,7 +76,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">(<a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_synchronized_d_b.html#ac6a59dcb64104f85d48bb4a2dae03efd">init:withService:userName:password:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(<a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_synchronized_d_b.html#a2219757fc72953e5ee9abe7c80eb1a5b">init:withService:userName:password:isJSONService:</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">(<a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> *)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_synchronized_d_b.html#a05abfc715e51aa1fe7740f09905adaae">initWithDelegate:toService:isJSONService:</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">(BOOL)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_synchronized_d_b.html#a45dd2c4b1858e42e380f4132af17e414">sync</a></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -89,7 +90,7 @@ Properties</h2></td></tr>
 <div class="textblock"><p>This is the primary class of QCDBSync. alloc and init it in your application's AppDelegate or some other file as you feel is appropriate.</p>
 <p>Once an object of this type is initialized use its sync method to synchronize your data. It is suggested that the sync call should be made from a background thread or your apps UI will be sluggish. </p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ac6a59dcb64104f85d48bb4a2dae03efd"></a><!-- doxytag: member="SynchronizedDB::init:withService:userName:password:" ref="ac6a59dcb64104f85d48bb4a2dae03efd" args="(id&lt; EnterpriseSyncDelegate &gt; aCoreDataContainer,[withService] NSString *aURLString,[userName] NSString *aUserName,[password] NSString *aPassword)" -->
+<a class="anchor" id="a2219757fc72953e5ee9abe7c80eb1a5b"></a><!-- doxytag: member="SynchronizedDB::init:withService:userName:password:isJSONService:" ref="a2219757fc72953e5ee9abe7c80eb1a5b" args="(id&lt; EnterpriseSyncDelegate &gt; aCoreDataContainer,[withService] NSString *aURLString,[userName] NSString *aUserName,[password] NSString *aPassword,[isJSONService] BOOL isJSONServiceFlag)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -115,7 +116,13 @@ Properties</h2></td></tr>
           <td class="paramkey">password:</td>
           <td></td>
           <td class="paramtype">(NSString*)&#160;</td>
-          <td class="paramname"><em>aPassword</em>&#160;</td>
+          <td class="paramname"><em>aPassword</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">isJSONService:</td>
+          <td></td>
+          <td class="paramtype">(BOOL)&#160;</td>
+          <td class="paramname"><em>isJSONServiceFlag</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -132,10 +139,54 @@ Properties</h2></td></tr>
     <tr><td class="paramname">aURLString</td><td>the url to the web app or service that is the front end for the remote database </td></tr>
     <tr><td class="paramname">aUserName</td><td>the user name on the remote app or service that has rights to access the app or service </td></tr>
     <tr><td class="paramname">aPassword</td><td>the password for the user on the remote app or service that has rights to access the app or service </td></tr>
+    <tr><td class="paramname">isJSONServiceFlag</td><td>a BOOL. If YES then the service is a JSON RPC service. If NO the service communicates via forms. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>an initialized <a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> object that is waiting to sync with a remote app or service if login succeeds </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a05abfc715e51aa1fe7740f09905adaae"></a><!-- doxytag: member="SynchronizedDB::initWithDelegate:toService:isJSONService:" ref="a05abfc715e51aa1fe7740f09905adaae" args="(id&lt; EnterpriseSyncDelegate &gt; aCoreDataContainer,[toService] NSString *aURLString,[isJSONService] BOOL isJSONServiceFlag)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (<a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> *) initWithDelegate: </td>
+          <td></td>
+          <td class="paramtype">(id&lt;<a class="el" href="protocol_enterprise_sync_delegate-p.html">EnterpriseSyncDelegate</a>&gt;)&#160;</td>
+          <td class="paramname"><em>aCoreDataContainer</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">toService:</td>
+          <td></td>
+          <td class="paramtype">(NSString*)&#160;</td>
+          <td class="paramname"><em>aURLString</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">isJSONService:</td>
+          <td></td>
+          <td class="paramtype">(BOOL)&#160;</td>
+          <td class="paramname"><em>isJSONServiceFlag</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns an initialized <a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> object that is ready to sync any changes made to the data store. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aCoreDataContainer</td><td>The <b><a class="el" href="protocol_enterprise_sync_delegate-p.html">EnterpriseSyncDelegate</a></b> instance that has the managedObjectContext as an attribute. If Xcode generated your CoreData code for you this is your app delegate </td></tr>
+    <tr><td class="paramname">aURLString</td><td>the url to the web app or service that is the front end for the remote database </td></tr>
+    <tr><td class="paramname">isJSONServiceFlag</td><td>a BOOL. If YES then the service is a JSON RPC service. If NO the service communicates via forms. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>an initialized <a class="el" href="interface_synchronized_d_b.html">SynchronizedDB</a> object that is ready for a login command </dd></dl>
 
 </div>
 </div>
@@ -209,7 +260,7 @@ Properties</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Mon Aug 1 2011 15:45:44 for QCDBSync by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Tue Aug 16 2011 13:54:06 for QCDBSync by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.4 </small></address>
 </body>

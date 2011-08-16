@@ -72,13 +72,23 @@
   </Token>
   <Token>
     <TokenIdentifier>
-      <Name>init:withService:userName:password:</Name>
+      <Name>init:withService:userName:password:isJSONService:</Name>
       <APILanguage>occ</APILanguage>
       <Type>instm</Type>
       <Scope>SynchronizedDB</Scope>
     </TokenIdentifier>
     <Path>interface_synchronized_d_b.html</Path>
-    <Anchor>ac6a59dcb64104f85d48bb4a2dae03efd</Anchor>
+    <Anchor>a2219757fc72953e5ee9abe7c80eb1a5b</Anchor>
+  </Token>
+  <Token>
+    <TokenIdentifier>
+      <Name>initWithDelegate:toService:isJSONService:</Name>
+      <APILanguage>occ</APILanguage>
+      <Type>instm</Type>
+      <Scope>SynchronizedDB</Scope>
+    </TokenIdentifier>
+    <Path>interface_synchronized_d_b.html</Path>
+    <Anchor>a05abfc715e51aa1fe7740f09905adaae</Anchor>
   </Token>
   <Token>
     <TokenIdentifier>

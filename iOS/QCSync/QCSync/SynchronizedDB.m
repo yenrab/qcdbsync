@@ -52,13 +52,33 @@
 @synthesize theCondition;
 @synthesize theCoordinator;
 @synthesize loggedIn;
+@synthesize usesJSONService;
 
 
 
 /*
  * An initialization method for SynchronizedDB objects.
  */
-- (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword{
+- (SynchronizedDB*)init:(id<EnterpriseSyncDelegate>)aCoreDataContainer withService:(NSString*)aURLString userName:(NSString*)aUserName password:(NSString*)aPassword isJSONService:(BOOL)isJSONServiceFlag{
+    
+    /*
+     * Initialize the service.
+     */
+    [self initWithDelegate:aCoreDataContainer toService:aURLString isJSONService:isJSONServiceFlag];
+	/*
+	 *  By making a request now we can check for connectivity
+	 */
+    /*
+	 * login if not logged in
+	 */
+    
+    self->loggedIn = [self attemptRemoteLogin:aUserName withPassword:aPassword];
+	return self;
+}
+
+
+- (SynchronizedDB*)initWithDelegate:(id<EnterpriseSyncDelegate>)aCoreDataContainer toService:(NSString*)aURLString isJSONService:(BOOL)isJSONServiceFlag{
+    self.usesJSONService = isJSONServiceFlag;
     self.delegate = aCoreDataContainer;
     /*
      * Setup listening for changes in the Core Data managed context
@@ -94,7 +114,7 @@
     } else {
         method_exchangeImplementations(originalMethod, overrideMethod);
     }
-
+    
     self.theCoordinator = [aCoreDataContainer persistentStoreCoordinator];
     self.theCondition = [[NSCondition alloc] init];
     
@@ -111,7 +131,7 @@
      name:NSManagedObjectContextDidSaveNotification
      object:self.delegate.managedObjectContext];
     
-
+    
 	/*
 	 *  turn on automated cookie handling
 	 */
@@ -126,16 +146,9 @@
 	self.changes = [NSMutableDictionary dictionaryWithCapacity:0];
 	self.url = [NSURL URLWithString:aURLString];
 	self.resultData = [NSMutableData dataWithLength:0];
-    
-	/*
-	 *  By making a request now we can check for connectivity
-	 */
-    /*
-	 * login if not logged in
-	 */
-    
-    self->loggedIn = [self attemptRemoteLogin:aUserName withPassword:aPassword];
-	return self;
+    //no login done with this type of connection.
+    self->loggedIn = YES;
+    return self;
 }
 
 - (void)mergeChangesFromContextDidSaveNotification:(NSNotification *)notification{
@@ -148,9 +161,15 @@
     @try {
         NSMutableURLRequest* loginRequest = [[NSMutableURLRequest alloc] initWithURL:self.url];
         [loginRequest setHTTPMethod:@"POST"];
-        
-        NSString* content = [NSString stringWithFormat:@"cmd=login&uname=%@&pword=%@", userName, password];
-        
+        NSString *content = nil;
+        if (self.usesJSONService) {
+            [loginRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"content-type"];
+            content = [NSString stringWithFormat:@"{\"cmd\":\"login\",\"uname\":\"%@\",\"pword\":\"%@\"}", userName, password];
+        }
+        else{
+            content = [NSString stringWithFormat:@"cmd=login&uname=%@&pword=%@", userName, password];
+        }
+        NSLog(@"request content string: %@",content);
         [loginRequest setHTTPBody:[content dataUsingEncoding:NSUTF8StringEncoding]];
         NSError *error = nil;
         NSURLResponse  *response = nil;
@@ -190,32 +209,6 @@
     //NSEntityDescription *aDeletedTrackableDescription = [NSEntityDescription entityForName:@"DeletedTrackable" inManagedObjectContext:aContext];
     NSLog(@"deleted: %@     inserted: %@    modified: %@",deletedObjects,insertedObjects,updatedObjects);
     BOOL shouldSave = NO;
-    /*
-	for (NSManagedObject *aDeletedObject in deletedObjects) {
-        Trackable *asTrackable = (Trackable*)aDeletedObject;
-        if (asTrackable.isRemoteData) {
-            asTrackable.isRemoteData = [NSNumber numberWithBool: NO];
-            continue;
-        }
-        /*
-         *  Create a deleted trackable object for anything deleted
-         *  that isn't a deleted trackable object
-         *
-		if([[aDeletedObject entity] isKindOfEntity:aTrackableDescription]
-           ){
-            if (asTrackable.isRemoteData) {
-                asTrackable.isRemoteData = [NSNumber numberWithBool: NO];
-                continue;
-            }
-			//Trackable *deletedTrackable = (Trackable*)aDeletedObject;
-			//NSLog(@"deleted object: %@",deletedTrackable);/* 
-  
-            asTrackable.flagAsDeleted = [NSNumber numberWithBool: YES];
-            asTrackable.updateTime = updateTimeStamp;
-            shouldSave = YES;
-		}
-	}
-*/
 
 	for (NSManagedObject *anInsertedObject in insertedObjects) {
 		if([[anInsertedObject entity] isKindOfEntity:aTrackableDescription]){
@@ -321,6 +314,7 @@
     NSPredicate *onlyNew = [NSPredicate predicateWithFormat:@"updateTime > %@",lastSync];
     //NSLog(@"predicate: %@",onlyNew);
     [request setPredicate:onlyNew];
+    NSDate *executionTimeStamp = [NSDate date];//this is used later for doing the deletions.
     error = nil;
     NSArray *trackables = [theContext actualExecuteFetchRequest:request error:&error];
     /*for (int i = 0; i < [trackables count]; i++) {
@@ -379,7 +373,15 @@
    
         NSMutableURLRequest* postDataRequest = [[NSMutableURLRequest alloc] initWithURL:self.url];
         [postDataRequest setHTTPMethod:@"POST"];
-        NSString* content = [NSString stringWithFormat:@"cmd=sync&data=%@", jsonString];
+        NSString* content = nil;
+        if (self.usesJSONService) {
+            [postDataRequest setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"content-type"];
+            content = [NSString stringWithFormat:@"{\"cmd\":\"sync\",\"data\":%@}", jsonString];
+        }
+        else{
+            content = [NSString stringWithFormat:@"cmd=sync&data=%@", jsonString];
+        }
+        NSLog(@"request content string: %@",content);
         [postDataRequest setHTTPBody:[content dataUsingEncoding:NSUTF8StringEncoding]];
         
         /*
@@ -525,7 +527,7 @@
                  */
                 NSFetchRequest *deleteSyncEntriesRequest = [[NSFetchRequest alloc] init];
                 [deleteSyncEntriesRequest setEntity:trackableDescription];
-                NSPredicate *deletedPredicate = [NSPredicate predicateWithFormat:@"flaggedAsDeleted == %@", [NSNumber numberWithBool:YES]];
+                NSPredicate *deletedPredicate = [NSPredicate predicateWithFormat:@"flaggedAsDeleted == %@ and updateTime < %@", [NSNumber numberWithBool:YES],executionTimeStamp];
                 [deleteSyncEntriesRequest setPredicate:deletedPredicate];
                 
                 error = nil;
