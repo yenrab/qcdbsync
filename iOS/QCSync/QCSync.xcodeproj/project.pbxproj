@@ -106,13 +106,6 @@
 				712B6DD513325474004C8275 /* SynchronizedDB.m */,
 				712B6DD613325474004C8275 /* EnterpriseSyncDelegate.h */,
 				712B6DCD1332545B004C8275 /* Supporting Files */,
-			);
-			path = QCSync;
-			sourceTree = "<group>";
-		};
-		712B6DCD1332545B004C8275 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
 				71E7086B13340E70000973C7 /* SyncTracker.h */,
 				71E7086C13340E70000973C7 /* SyncTracker.m */,
 				71E7086713340E6F000973C7 /* Trackable.h */,
@@ -132,6 +125,13 @@
 				712B6DD813325474004C8275 /* NSManagedObject+Dictionary.m */,
 				9B5C153C13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.h */,
 				9B5C153D13E4CD7000DB0BD1 /* NSManagedObjectContext_Sync.m */,
+			);
+			path = QCSync;
+			sourceTree = "<group>";
+		};
+		712B6DCD1332545B004C8275 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				712B6DCE1332545B004C8275 /* QCSync-Prefix.pch */,
 			);
 			name = "Supporting Files";

@@ -452,7 +452,7 @@
                 //}
                 //NSDictionary *aData = [aRow objectAtIndex:0];
                 NSDictionary *aData = [resultDataTable objectAtIndex:i];
-                NSLog(@"aData: %@",aData);
+                NSLog(@"\n\n\n\nbeginning of loopData %i from server: %@",i,aData);
                 //bad data sent from server
                 if ([aData count] > 1) {
                     
@@ -593,6 +593,7 @@
 }
 
 - (NSManagedObject*)buildObjectFromDictionary:(NSDictionary*)anObjectDescriptionDictionary inContext:(NSManagedObjectContext*)theContext error:(NSError **)error{
+    NSLog(@"\n\n\n\nStarting new object from dictionary.");
     NSManagedObject *returnEntity = nil;
     NSString *syncType = [[anObjectDescriptionDictionary allKeys] objectAtIndex:0];
     NSArray *syncTypeParts = [syncType componentsSeparatedByString:@"_"];
@@ -610,20 +611,33 @@
      *  Create and update end up being the same behavior.
      */
     if ([operationType isEqualToString:@"create"] || [operationType isEqualToString:@"update"]) {
+        NSLog(@"working with a %@",className);
         //find an instance
         NSString *aUUID = [anObjectDescription objectForKey:@"UUID"];
         NSEntityDescription *entity = [NSEntityDescription entityForName:className 
                                                   inManagedObjectContext:theContext];
+
         //see if the entity already exists
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         [request setEntity:entity];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"UUID == [c]%@", aUUID];
-        [request setPredicate:predicate];
-        NSError *aFetchError = nil;
-        NSMutableArray *foundEntities = [[theContext executeFetchRequest:request error:&aFetchError] mutableCopy];
+		[request setPredicate:predicate];
+        NSError *fetchError = nil;
+        NSMutableArray *foundEntities = [[theContext executeFetchRequest:request error:&fetchError] mutableCopy];
+        
+        /*
+         *
+         *  For some reason the predicate is not filtering any of the entities when the request is executed.
+         *  The code below should work if the predicate was working correctly. I'm going to replace it with 
+         *  a manual search.
+         *
+         */
+        /*
+        [request release];
         //if the entity already exists then ignore the create message.
         if ([foundEntities count] == 0) {
             //create
+            NSLog(@"!!!!!!!!!!!!!!!!!!!!!!creating!!!!!!!!!!!!!!!!");
             NSManagedObject *anObject = [NSEntityDescription insertNewObjectForEntityForName:className 
                                                                       inManagedObjectContext:theContext];
             Trackable *asTrackable = (Trackable*)anObject;
@@ -631,8 +645,28 @@
             returnEntity = anObject;
         }
         else{
+            NSLog(@"!!!!!!!!!!!!!!!!!!!!!!found!!!!!!!!!!!!!!!!");
             returnEntity = [foundEntities objectAtIndex:0];
         }
+         */
+        for (NSManagedObject *aPossibleEntity in foundEntities) {
+            NSString *possibleUUID = [aPossibleEntity valueForKey:@"UUID"];
+            if ([aUUID isEqualToString:possibleUUID]) {
+                NSLog(@"!!!!!!!!!!!!!!!!!!!!!!found!!!!!!!!!!!!!!!!");
+                returnEntity = aPossibleEntity;
+                break;
+            }
+        }
+        if (!returnEntity) {
+            NSLog(@"!!!!!!!!!!!!!!!!!!!!!!creating!!!!!!!!!!!!!!!!");
+            NSManagedObject *anObject = [NSEntityDescription insertNewObjectForEntityForName:className 
+                                                                      inManagedObjectContext:theContext];
+            Trackable *asTrackable = (Trackable*)anObject;
+            asTrackable.isRemoteData = [NSNumber numberWithBool: YES];
+            returnEntity = anObject;
+
+        }
+        
         /*
          *  use key/value coding to set the attributes.
          */
