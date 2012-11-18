@@ -1,11 +1,12 @@
-package org.quickconnect.sync;
+package org.quickconnectfamily.sync;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.quickconnect.json.JSONException;
-import org.quickconnect.json.JSONUtilities;
+import org.quickconnectfamily.json.JSONException;
+import org.quickconnectfamily.json.JSONUtilities;
+
  
 public class SyncData implements Serializable{
 	String lastSyncTime;

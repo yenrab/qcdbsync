@@ -21,10 +21,11 @@
 
  */
 
-package org.quickconnect.sync;
+package org.quickconnectfamily.sync;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -60,13 +61,14 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.quickconnect.dbaccess.DataAccessException;
-import org.quickconnect.dbaccess.DataAccessObject;
-import org.quickconnect.dbaccess.DataAccessResult;
-import org.quickconnect.json.JSONException;
-import org.quickconnect.json.JSONUtilities;
+import org.quickconnectfamily.dbaccess.DataAccessException;
+import org.quickconnectfamily.dbaccess.DataAccessObject;
+import org.quickconnectfamily.dbaccess.DataAccessResult;
+import org.quickconnectfamily.json.JSONException;
+import org.quickconnectfamily.json.JSONUtilities;
 
 import android.app.Activity;
+import android.content.Context;
 /**
  * The SynchronizedDB class provides a safe way of keeping a SQLite file on an Android device in sync with 
  * a remote server.  The API for this class is the only API needed.<br/>
@@ -86,7 +88,7 @@ import android.app.Activity;
  */
 public class SynchronizedDB{
 
-	private Activity theActivity;
+	private WeakReference<Context> theActivityRef;
 	private HttpClient httpClient;
 	private HashMap<String,String> registeredSQLStatements = new HashMap<String,String>();
 	private String dbName;
@@ -102,7 +104,7 @@ public class SynchronizedDB{
 	/**
 	 * Creates a SynchronizedDB object used to interact with a local database and a remote HTTP service.  It 
 	 * sends a login request to the 
-	 * @param theActivity - the activity that the database is associated with.  This is usually your initial Acivity class.
+	 * @param theActivityRef - the activity that the database is associated with.  This is usually your initial Acivity class.
 	 * @param aDbName - the name of the SQLite file to be kept in sync.
 	 * @param aRemoteURL - the URL of the service that will respond to synchronization requests including the port number if not port 80.  
 	 * For security reasons it is suggested that your URL be an HTTPS URL but this is not required.
@@ -114,12 +116,12 @@ public class SynchronizedDB{
 	 * @throws URISyntaxException
 	 * @throws InterruptedException
 	 */
-	public SynchronizedDB(Activity theActivity, String aDbName, URL aRemoteURL, int port, String aRemoteUname, String aRemotePword, long syncTimeout) throws DataAccessException, URISyntaxException, InterruptedException {
+	public SynchronizedDB(WeakReference<Context> theActivityRef, String aDbName, URL aRemoteURL, int port, String aRemoteUname, String aRemotePword, long syncTimeout) throws DataAccessException, URISyntaxException, InterruptedException {
 		dbName = aDbName;
 		remoteURL = aRemoteURL.toURI();
 		remoteUname = aRemoteUname;
 		remotePword = aRemotePword;
-		this.theActivity = theActivity;
+		this.theActivityRef = theActivityRef;
 		
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 		if(aRemoteURL.toExternalForm().indexOf("http") == 0){
@@ -140,9 +142,9 @@ public class SynchronizedDB{
 		String errorMessage = null;
 		//insert the required tables if they don't exist
 		try {
-			DataAccessResult aResult = DataAccessObject.setData(theActivity, aDbName, "CREATE TABLE IF NOT EXISTS sync_info(int id PRIMARY KEY  NOT NULL, last_sync TIMESTAMP);", null);
+			DataAccessResult aResult = DataAccessObject.setData(theActivityRef, aDbName, "CREATE TABLE IF NOT EXISTS sync_info(int id PRIMARY KEY  NOT NULL, last_sync TIMESTAMP);", null);
 			if(aResult.getErrorDescription().equals("not an error")){
-				aResult = DataAccessObject.setData(theActivity, aDbName, "CREATE TABLE IF NOT EXISTS sync_values(timeStamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, sql_key TEXT, sql_params TEXT)", null);
+				aResult = DataAccessObject.setData(theActivityRef, aDbName, "CREATE TABLE IF NOT EXISTS sync_values(timeStamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, sql_key TEXT, sql_params TEXT)", null);
 				if(!aResult.getErrorDescription().equals("not an error")){
 					allTransactionStatementsExecuted = false;
 					errorMessage = aResult.getErrorDescription();
@@ -233,7 +235,7 @@ public class SynchronizedDB{
 			throw new DataAccessException("No such key: "+sqlKey);
 		}
 		semaphore.acquire(1);
-		retVal = DataAccessObject.getData(theActivity, dbName, sql, parameters);
+		retVal = DataAccessObject.getData(theActivityRef, dbName, sql, parameters);
 		semaphore.release(1);
 		if(!executingTransaction){
 			semaphore.release(1);
@@ -268,14 +270,14 @@ public class SynchronizedDB{
 		Object[] preparedStatementParameters = new Object[2];
 		preparedStatementParameters[0] = sqlKey;
 		preparedStatementParameters[1] = JSONUtilities.stringify(parameters);
-		DataAccessResult syncInsertResult = DataAccessObject.setData(theActivity, dbName, 
+		DataAccessResult syncInsertResult = DataAccessObject.setData(theActivityRef, dbName, 
 													"INSERT INTO sync_values (sql_key, sql_params) VALUES(?,?)", preparedStatementParameters);
 		if(!syncInsertResult.getErrorDescription().equals("not an error")){
 			throw new DataAccessException("Error: unable to insert sync values "+parameters+" for key "+sqlKey);
 		}
 		
 		//execute the sql statement
-		retVal = DataAccessObject.setData(theActivity, dbName, sql, parameters);
+		retVal = DataAccessObject.setData(theActivityRef, dbName, sql, parameters);
 		endTransaction();
 
 		//registeredSQLStatements.put(sqlKey, SQL);
@@ -292,7 +294,7 @@ public class SynchronizedDB{
 	public void startTransaction() throws InterruptedException, DataAccessException{
 		semaphore.acquire(1);
 		executingTransaction = true;
-		DataAccessObject.startTransaction(theActivity, dbName);
+		DataAccessObject.startTransaction(theActivityRef, dbName);
 		semaphore.release(1);
 		allTransactionStatementsExecuted = true;
 	}
@@ -304,7 +306,7 @@ public class SynchronizedDB{
 	 */
 	public void endTransaction() throws InterruptedException, DataAccessException{
 		semaphore.acquire(1);
-		DataAccessObject.endTransaction(theActivity, dbName, allTransactionStatementsExecuted);
+		DataAccessObject.endTransaction(theActivityRef, dbName, allTransactionStatementsExecuted);
 		executingTransaction = true;
 		semaphore.release(1);
 	}
@@ -397,10 +399,10 @@ public class SynchronizedDB{
 		//get the data from the sync_values table
 		startTransaction();
 		System.out.println("after transaction start");
-		DataAccessResult syncValuesResult = DataAccessObject.getData(theActivity, dbName, "SELECT * FROM sync_values", null);
+		DataAccessResult syncValuesResult = DataAccessObject.getData(theActivityRef, dbName, "SELECT * FROM sync_values", null);
 		ArrayList<ArrayList<String>> syncValues = syncValuesResult.getResults();
 		//get the data from the sync_info table
-		DataAccessResult lastSyncResult = DataAccessObject.getData(theActivity, dbName, "SELECT last_sync FROM sync_info", null);
+		DataAccessResult lastSyncResult = DataAccessObject.getData(theActivityRef, dbName, "SELECT last_sync FROM sync_info", null);
 		
 		//release the semaphore here since the rest is just data prep and send
 		
@@ -418,7 +420,9 @@ public class SynchronizedDB{
 			JSONString = JSONUtilities.stringify(theDataToSync);
 		}
 		else{
-			JSONString = JSONUtilities.stringify(theDataToSync, anEncryptionCipher);
+			//Not supported in QCJSON at this time.
+			//JSONString = JSONUtilities.stringify(theDataToSync, anEncryptionCipher);
+			JSONString = JSONUtilities.stringify(theDataToSync);
 		}
 		//escape the resultant string
 
@@ -454,14 +458,14 @@ public class SynchronizedDB{
 				Object[] preparedStatementParameters = new Object[1];
 				preparedStatementParameters[0] = lastSyncTime;
 				try{
-				DataAccessResult updateResult = DataAccessObject.setData(theActivity, dbName, "INSERT OR REPLACE INTO sync_info VALUES(0,?)", preparedStatementParameters);
+				DataAccessResult updateResult = DataAccessObject.setData(theActivityRef, dbName, "INSERT OR REPLACE INTO sync_info VALUES(0,?)", preparedStatementParameters);
 				
 				//execute each of the inserts for the sync data received.
 				for(HashMap<String,Object>syncDatum : dataList){
 					String sqlKey = (String)syncDatum.get("key");
 					ArrayList<String> sqlParameterList = (ArrayList<String>)syncDatum.get("syncInfo");
 					String sql = registeredSQLStatements.get(sqlKey);
-					updateResult = DataAccessObject.setData(theActivity, dbName, sql, sqlParameterList.toArray());
+					updateResult = DataAccessObject.setData(theActivityRef, dbName, sql, sqlParameterList.toArray());
 				}
 				}
 				catch(Exception e){

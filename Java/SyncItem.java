@@ -1,4 +1,4 @@
-package org.quickconnect.sync;
+package org.quickconnectfamily.sync;
 
 import java.io.Serializable;
 import java.util.ArrayList;

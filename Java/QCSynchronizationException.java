@@ -1,4 +1,4 @@
-package org.quickconnect.sync;
+package org.quickconnectfamily.sync;
 
 public class QCSynchronizationException extends Exception {
 
